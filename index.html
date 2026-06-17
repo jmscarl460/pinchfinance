@@ -97,7 +97,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.7s ease, visibility 0.7s ease;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+            cursor: pointer;
         }
         #splash.hidden {
             opacity: 0;
@@ -113,6 +114,7 @@
             box-shadow: var(--shadow);
             text-align: center;
             min-width: 260px;
+            pointer-events: none;
         }
         #splash .logo-box .bulb-icon {
             font-size: 3.4rem;
@@ -151,6 +153,7 @@
             border-radius: 4px;
             overflow: hidden;
             position: relative;
+            pointer-events: none;
         }
         #splash .loader-wrap .bar {
             position: absolute;
@@ -179,6 +182,24 @@
             font-size: 0.6rem;
             color: var(--text-muted);
             letter-spacing: 1px;
+            pointer-events: none;
+        }
+        #splash .click-hint {
+            margin-top: 16px;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+            pointer-events: none;
+            animation: pulse 1.8s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 0.9;
+            }
         }
 
         /* ----- APP SHELL ----- */
@@ -965,6 +986,7 @@
             <div class="sub">Personal Finance · Desktop Edition</div>
             <div class="loader-wrap"><div class="bar"></div></div>
             <div class="version">v2.0 · Windows Vista Aero</div>
+            <div class="click-hint">click anywhere to continue</div>
         </div>
     </div>
 
@@ -1234,11 +1256,9 @@
             // ---------- SILVERLIGHT DETECTION & FALLBACK ----------
             function isSilverlightInstalled() {
                 try {
-                    // Internet Explorer / ActiveX
                     if (window.ActiveXObject) {
                         return new ActiveXObject('AgControl.AgControl') !== null;
                     }
-                    // Other browsers (NPAPI)
                     if (navigator.plugins) {
                         for (var i = 0; i < navigator.plugins.length; i++) {
                             if (navigator.plugins[i].name.indexOf('Silverlight') !== -1) {
@@ -1254,15 +1274,9 @@
             var statusSL = document.getElementById('statusSilverlight');
             if (silverlightInstalled) {
                 statusSL.textContent = 'Silverlight';
-                // Note: We don't have a Silverlight version, so we still use HTML5.
-                // But we inform the user that Silverlight is available, yet we use HTML5 fallback.
-                // We could add a message, but we'll just use HTML5.
-                console.log('Silverlight detected. Falling back to HTML5 (no Silverlight version available).');
             } else {
                 statusSL.textContent = 'HTML5';
-                console.log('Silverlight not detected. Using HTML5.');
             }
-            // Always use HTML5 – our app is pure HTML5.
 
             // ---------- DATA LAYER ----------
             const DB_KEY = 'bulbFinance2026';
@@ -1500,6 +1514,7 @@
 
             function drawIncomeExpenseChart() {
                 const canvas = document.getElementById('chartIncomeExpense');
+                if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 const rect = canvas.parentElement.getBoundingClientRect();
                 const w = Math.min(rect.width - 20, 400);
@@ -1522,18 +1537,16 @@
                 const barW = chartW * 0.28;
                 const gap = chartW * 0.22;
 
-                // backgrounds
                 ctx.fillStyle = 'rgba(0,122,138,0.12)';
                 ctx.fillRect(pad, pad + chartH - (inc / maxVal) * chartH, barW, (inc / maxVal) * chartH);
                 ctx.fillStyle = 'rgba(200,90,90,0.12)';
                 ctx.fillRect(pad + barW + gap, pad + chartH - (exp / maxVal) * chartH, barW, (exp / maxVal) * chartH);
 
-                // actual bars
                 ctx.fillStyle = '#007a8a';
                 ctx.fillRect(pad, pad + chartH - (inc / maxVal) * chartH, barW, Math.max(2, (inc / maxVal) * chartH));
                 ctx.fillStyle = '#c85a5a';
                 ctx.fillRect(pad + barW + gap, pad + chartH - (exp / maxVal) * chartH, barW, Math.max(2, (exp / maxVal) *
-                chartH));
+                    chartH));
 
                 ctx.fillStyle = '#6a8a96';
                 ctx.font = '9px sans-serif';
@@ -1551,6 +1564,7 @@
             // ---------- ACCOUNTS ----------
             function renderAccounts() {
                 const tbody = document.getElementById('accountsTable');
+                if (!tbody) return;
                 if (data.accounts.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="4" class="text-muted text-sm">No accounts</td></tr>';
                     return;
@@ -1578,9 +1592,14 @@
 
             // ---------- TRANSACTIONS ----------
             function renderTransactions() {
-                const search = document.getElementById('txSearch').value.toLowerCase();
-                const filterType = document.getElementById('txFilterType').value;
-                const filterAcc = document.getElementById('txFilterAccount').value;
+                const search = document.getElementById('txSearch');
+                const filterType = document.getElementById('txFilterType');
+                const filterAcc = document.getElementById('txFilterAccount');
+                if (!search || !filterType || !filterAcc) return;
+
+                const searchVal = search.value.toLowerCase();
+                const typeVal = filterType.value;
+                const accVal = filterAcc.value;
 
                 // populate account filter
                 const accSel = document.getElementById('txFilterAccount');
@@ -1590,14 +1609,15 @@
                 accSel.value = curVal;
 
                 let list = data.transactions.slice();
-                if (search) list = list.filter(t => t.description.toLowerCase().includes(search) || t.category.toLowerCase()
-                    .includes(search));
-                if (filterType) list = list.filter(t => t.type === filterType);
-                if (filterAcc) list = list.filter(t => t.accountId === filterAcc);
+                if (searchVal) list = list.filter(t => t.description.toLowerCase().includes(searchVal) || t.category
+                    .toLowerCase().includes(searchVal));
+                if (typeVal) list = list.filter(t => t.type === typeVal);
+                if (accVal) list = list.filter(t => t.accountId === accVal);
 
                 list.sort((a, b) => b.date.localeCompare(a.date));
 
                 const tbody = document.getElementById('transactionsTable');
+                if (!tbody) return;
                 if (list.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="6" class="text-muted text-sm">No transactions</td></tr>';
                     return;
@@ -1627,6 +1647,7 @@
             // ---------- BUDGETS ----------
             function renderBudgets() {
                 const tbody = document.getElementById('budgetsTable');
+                if (!tbody) return;
                 if (data.budgets.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="5" class="text-muted text-sm">No budgets</td></tr>';
                     return;
@@ -1649,6 +1670,7 @@
             // ---------- GOALS ----------
             function renderGoals() {
                 const el = document.getElementById('goalsList');
+                if (!el) return;
                 if (data.goals.length === 0) {
                     el.innerHTML = '<div class="glass text-muted text-sm">No savings goals yet.</div>';
                     return;
@@ -1672,6 +1694,7 @@
             // ---------- BILLS ----------
             function renderBills() {
                 const el = document.getElementById('billsList');
+                if (!el) return;
                 if (data.bills.length === 0) {
                     el.innerHTML = '<div class="text-muted text-sm">No bills.</div>';
                     return;
@@ -1691,14 +1714,18 @@
                 drawTrendChart();
                 const inc = getMonthlyIncome();
                 const exp = getMonthlyExpenses();
-                document.getElementById('reportSummary').innerHTML =
-                    `<div class="flex-between"><span>Monthly Income</span><span>${formatCurrency(inc)}</span></div>
+                const el = document.getElementById('reportSummary');
+                if (el) {
+                    el.innerHTML =
+                        `<div class="flex-between"><span>Monthly Income</span><span>${formatCurrency(inc)}</span></div>
                              <div class="flex-between"><span>Monthly Expenses</span><span>${formatCurrency(exp)}</span></div>
                              <div class="flex-between"><strong>Net</strong><strong>${formatCurrency(inc - exp)}</strong></div>`;
+                }
             }
 
             function drawCategoryChart() {
                 const canvas = document.getElementById('chartSpendingCategory');
+                if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 const rect = canvas.parentElement.getBoundingClientRect();
                 const w = Math.min(rect.width - 20, 400);
@@ -1751,6 +1778,7 @@
 
             function drawTrendChart() {
                 const canvas = document.getElementById('chartTrends');
+                if (!canvas) return;
                 const ctx = canvas.getContext('2d');
                 const rect = canvas.parentElement.getBoundingClientRect();
                 const w = Math.min(rect.width - 20, 400);
@@ -1780,7 +1808,6 @@
 
                 ctx.clearRect(0, 0, w, h);
 
-                // grid
                 ctx.strokeStyle = 'rgba(0,0,0,0.04)';
                 ctx.lineWidth = 0.5;
                 for (let i = 0; i < 5; i++) {
@@ -1831,12 +1858,14 @@
             // ---------- STATUS BAR ----------
             function updateStatusBar() {
                 const total = data.transactions.length;
-                document.getElementById('statusItems').textContent = `${total} transactions`;
+                const el = document.getElementById('statusItems');
+                if (el) el.textContent = `${total} transactions`;
                 const now = new Date();
-                document.getElementById('statusTime').textContent = now.toLocaleString();
+                const timeEl = document.getElementById('statusTime');
+                if (timeEl) timeEl.textContent = now.toLocaleString();
                 const theme = document.documentElement.getAttribute('data-theme') || 'light';
-                document.getElementById('statusTheme').textContent = theme === 'dark' ? 'Dark' : 'Light';
-                // Silverlight status already set at init, but keep it.
+                const themeEl = document.getElementById('statusTheme');
+                if (themeEl) themeEl.textContent = theme === 'dark' ? 'Dark' : 'Light';
             }
 
             // ---------- NAVIGATION ----------
@@ -1853,13 +1882,17 @@
 
             // ---------- MODAL ----------
             function openModal(title, bodyHTML) {
-                document.getElementById('modalTitle').textContent = title;
-                document.getElementById('modalBody').innerHTML = bodyHTML;
-                document.getElementById('modalOverlay').classList.add('open');
+                const titleEl = document.getElementById('modalTitle');
+                const bodyEl = document.getElementById('modalBody');
+                if (titleEl) titleEl.textContent = title;
+                if (bodyEl) bodyEl.innerHTML = bodyHTML;
+                const overlay = document.getElementById('modalOverlay');
+                if (overlay) overlay.classList.add('open');
             }
 
             function closeModal() {
-                document.getElementById('modalOverlay').classList.remove('open');
+                const overlay = document.getElementById('modalOverlay');
+                if (overlay) overlay.classList.remove('open');
             }
 
             // ---------- THEME ----------
@@ -1867,8 +1900,10 @@
                 const current = document.documentElement.getAttribute('data-theme');
                 const next = current === 'dark' ? 'light' : 'dark';
                 document.documentElement.setAttribute('data-theme', next);
-                document.getElementById('themeToggle').textContent = next === 'dark' ? '☀️' : '🌙';
-                document.getElementById('statusTheme').textContent = next === 'dark' ? 'Dark' : 'Light';
+                const toggleBtn = document.getElementById('themeToggle');
+                if (toggleBtn) toggleBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+                const themeEl = document.getElementById('statusTheme');
+                if (themeEl) themeEl.textContent = next === 'dark' ? 'Dark' : 'Light';
                 localStorage.setItem('bulbTheme', next);
                 renderDashboard();
                 renderReports();
@@ -1973,7 +2008,6 @@
                         const root = doc.documentElement;
                         if (root.tagName !== 'finance') { throw new Error('Invalid XML: root must be <finance>'); }
                         const newData = defaultData();
-                        // accounts
                         root.querySelectorAll('account').forEach(el => {
                             newData.accounts.push({
                                 id: genId(),
@@ -1982,7 +2016,6 @@
                                 balance: parseFloat(el.querySelector('balance')?.textContent) || 0,
                             });
                         });
-                        // transactions
                         root.querySelectorAll('transaction').forEach(el => {
                             newData.transactions.push({
                                 id: genId(),
@@ -1994,7 +2027,6 @@
                                 type: el.querySelector('type')?.textContent || 'expense',
                             });
                         });
-                        // budgets
                         root.querySelectorAll('budget').forEach(el => {
                             newData.budgets.push({
                                 id: genId(),
@@ -2002,7 +2034,6 @@
                                 amount: parseFloat(el.querySelector('amount')?.textContent) || 0,
                             });
                         });
-                        // goals
                         root.querySelectorAll('goal').forEach(el => {
                             newData.goals.push({
                                 id: genId(),
@@ -2012,7 +2043,6 @@
                                 deadline: el.querySelector('deadline')?.textContent || todayStr(),
                             });
                         });
-                        // bills
                         root.querySelectorAll('bill').forEach(el => {
                             newData.bills.push({
                                 id: genId(),
@@ -2034,213 +2064,267 @@
                 reader.readAsText(file);
             }
 
-            // ---------- EVENT BINDING ----------
+            // ---------- SPLASH CONTROL ----------
+            function hideSplash() {
+                const splash = document.getElementById('splash');
+                const app = document.getElementById('app');
+                if (splash) splash.classList.add('hidden');
+                if (app) app.classList.add('visible');
+            }
+
+            // ---------- INIT ----------
             function init() {
-                // Splash screen
-                setTimeout(() => {
-                    document.getElementById('splash').classList.add('hidden');
-                    document.getElementById('app').classList.add('visible');
-                }, 900);
-
-                // Theme
-                const savedTheme = localStorage.getItem('bulbTheme') || 'light';
-                if (savedTheme === 'dark') {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    document.getElementById('themeToggle').textContent = '☀️';
-                }
-                document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-                document.getElementById('settingsThemeToggle').addEventListener('click', toggleTheme);
-
-                // Navigation
-                document.querySelectorAll('.topbar .nav button, .sidebar button').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const page = this.dataset.page;
-                        if (page) navigate(page);
-                    });
-                });
-
-                // Modal close
-                document.getElementById('modalClose').addEventListener('click', closeModal);
-                document.getElementById('modalOverlay').addEventListener('click', function(e) {
-                    if (e.target === this) closeModal();
-                });
-
-                // Add Account
-                document.getElementById('addAccountBtn').addEventListener('click', function() {
-                    openModal('Add Account', `
-                        <div class="form-group"><label>Account Name</label><input id="fAccName" value="New Account" /></div>
-                        <div class="form-group"><label>Type</label><select id="fAccType"><option value="checking">Checking</option><option value="savings">Savings</option><option value="cash">Cash</option><option value="credit">Credit Card</option><option value="loan">Loan</option><option value="investment">Investment</option></select></div>
-                        <div class="form-group"><label>Balance</label><input id="fAccBalance" type="number" value="0" step="0.01" /></div>
-                        <button class="btn btn-primary" id="fAccSubmit">Create</button>
-                    `);
-                    document.getElementById('fAccSubmit').addEventListener('click', function() {
-                        const name = document.getElementById('fAccName').value.trim() || 'Unnamed';
-                        const type = document.getElementById('fAccType').value;
-                        const balance = parseFloat(document.getElementById('fAccBalance').value) || 0;
-                        data.accounts.push({ id: genId(), name, type, balance });
-                        persist();
-                        renderAll();
-                        closeModal();
-                    });
-                });
-
-                // Add Transaction
-                document.getElementById('addTxBtn').addEventListener('click', function() {
-                    const accOpts = data.accounts.map(a =>
-                        `<option value="${a.id}">${a.name}</option>`).join('');
-                    openModal('Add Transaction', `
-                        <div class="form-row">
-                            <div class="form-group"><label>Date</label><input id="fTxDate" type="date" value="${todayStr()}" /></div>
-                            <div class="form-group"><label>Type</label><select id="fTxType"><option value="expense">Expense</option><option value="income">Income</option></select></div>
-                        </div>
-                        <div class="form-group"><label>Description</label><input id="fTxDesc" placeholder="Description" /></div>
-                        <div class="form-row">
-                            <div class="form-group"><label>Category</label><input id="fTxCat" placeholder="Category" /></div>
-                            <div class="form-group"><label>Amount</label><input id="fTxAmt" type="number" step="0.01" placeholder="0.00" /></div>
-                        </div>
-                        <div class="form-group"><label>Account</label><select id="fTxAcc">${accOpts}</select></div>
-                        <button class="btn btn-primary" id="fTxSubmit">Add</button>
-                    `);
-                    document.getElementById('fTxSubmit').addEventListener('click', function() {
-                        const date = document.getElementById('fTxDate').value || todayStr();
-                        const type = document.getElementById('fTxType').value;
-                        const desc = document.getElementById('fTxDesc').value.trim() || 'Transaction';
-                        const cat = document.getElementById('fTxCat').value.trim() || 'Other';
-                        const amount = parseFloat(document.getElementById('fTxAmt').value);
-                        const accId = document.getElementById('fTxAcc').value;
-                        if (!amount || amount <= 0) { alert('Please enter a valid amount.'); return; }
-                        if (!accId) { alert('Please select an account.'); return; }
-                        data.transactions.push({ id: genId(), accountId: accId, category: cat, amount,
-                            date, description: desc, type });
-                        const acc = getAccount(accId);
-                        if (acc) acc.balance += (type === 'income' ? amount : -amount);
-                        persist();
-                        renderAll();
-                        closeModal();
-                    });
-                });
-
-                // Add Budget
-                document.getElementById('addBudgetBtn').addEventListener('click', function() {
-                    openModal('Add Budget', `
-                        <div class="form-group"><label>Category</label><input id="fBudCat" placeholder="Category" /></div>
-                        <div class="form-group"><label>Monthly Limit</label><input id="fBudAmt" type="number" step="0.01" placeholder="0.00" /></div>
-                        <button class="btn btn-primary" id="fBudSubmit">Create</button>
-                    `);
-                    document.getElementById('fBudSubmit').addEventListener('click', function() {
-                        const cat = document.getElementById('fBudCat').value.trim() || 'Other';
-                        const amount = parseFloat(document.getElementById('fBudAmt').value);
-                        if (!amount || amount <= 0) { alert('Enter a valid amount.'); return; }
-                        data.budgets.push({ id: genId(), category: cat, amount });
-                        persist();
-                        renderAll();
-                        closeModal();
-                    });
-                });
-
-                // Add Goal
-                document.getElementById('addGoalBtn').addEventListener('click', function() {
-                    openModal('Add Savings Goal', `
-                        <div class="form-group"><label>Goal Name</label><input id="fGoalName" placeholder="e.g. New Car" /></div>
-                        <div class="form-group"><label>Target Amount</label><input id="fGoalTarget" type="number" step="0.01" placeholder="0.00" /></div>
-                        <div class="form-group"><label>Current Saved</label><input id="fGoalCurrent" type="number" step="0.01" placeholder="0.00" value="0" /></div>
-                        <div class="form-group"><label>Deadline</label><input id="fGoalDeadline" type="date" value="${todayStr()}" /></div>
-                        <button class="btn btn-primary" id="fGoalSubmit">Create</button>
-                    `);
-                    document.getElementById('fGoalSubmit').addEventListener('click', function() {
-                        const name = document.getElementById('fGoalName').value.trim() || 'Goal';
-                        const target = parseFloat(document.getElementById('fGoalTarget').value);
-                        const current = parseFloat(document.getElementById('fGoalCurrent').value) || 0;
-                        const deadline = document.getElementById('fGoalDeadline').value || todayStr();
-                        if (!target || target <= 0) { alert('Enter a valid target amount.'); return; }
-                        data.goals.push({ id: genId(), name, target, current, deadline });
-                        persist();
-                        renderAll();
-                        closeModal();
-                    });
-                });
-
-                // Add Bill
-                document.getElementById('addBillBtn').addEventListener('click', function() {
-                    openModal('Add Bill', `
-                        <div class="form-group"><label>Bill Name</label><input id="fBillName" placeholder="e.g. Rent" /></div>
-                        <div class="form-group"><label>Amount</label><input id="fBillAmt" type="number" step="0.01" placeholder="0.00" /></div>
-                        <div class="form-group"><label>Due Date</label><input id="fBillDate" type="date" value="${todayStr()}" /></div>
-                        <div class="form-group"><label><input type="checkbox" id="fBillRecurring" checked /> Recurring</label></div>
-                        <button class="btn btn-primary" id="fBillSubmit">Add</button>
-                    `);
-                    document.getElementById('fBillSubmit').addEventListener('click', function() {
-                        const name = document.getElementById('fBillName').value.trim() || 'Bill';
-                        const amount = parseFloat(document.getElementById('fBillAmt').value);
-                        const dueDate = document.getElementById('fBillDate').value || todayStr();
-                        const recurring = document.getElementById('fBillRecurring').checked;
-                        if (!amount || amount <= 0) { alert('Enter a valid amount.'); return; }
-                        data.bills.push({ id: genId(), name, amount, dueDate, recurring, paid: false });
-                        persist();
-                        renderAll();
-                        closeModal();
-                    });
-                });
-
-                // Transaction filters
-                document.getElementById('txSearch').addEventListener('input', renderTransactions);
-                document.getElementById('txFilterType').addEventListener('change', renderTransactions);
-                document.getElementById('txFilterAccount').addEventListener('change', renderTransactions);
-                document.getElementById('txClearFilters').addEventListener('click', function() {
-                    document.getElementById('txSearch').value = '';
-                    document.getElementById('txFilterType').value = '';
-                    document.getElementById('txFilterAccount').value = '';
-                    renderTransactions();
-                });
-
-                // Settings
-                document.getElementById('settingsBackup').addEventListener('click', backupData);
-                document.getElementById('settingsRestoreBtn').addEventListener('click', function() {
-                    document.getElementById('settingsRestoreInput').click();
-                });
-                document.getElementById('settingsRestoreInput').addEventListener('change', function(e) {
-                    if (this.files && this.files[0]) restoreData(this.files[0]);
-                    this.value = '';
-                });
-                document.getElementById('settingsExportXML').addEventListener('click', exportXML);
-                document.getElementById('settingsImportXMLBtn').addEventListener('click', function() {
-                    document.getElementById('settingsImportXMLInput').click();
-                });
-                document.getElementById('settingsImportXMLInput').addEventListener('change', function(e) {
-                    if (this.files && this.files[0]) importXML(this.files[0]);
-                    this.value = '';
-                });
-                document.getElementById('settingsReset').addEventListener('click', function() {
-                    if (confirm('⚠️ Permanently delete ALL data? This cannot be undone.')) {
-                        if (confirm('Are you sure?')) {
-                            saveData(defaultData());
-                            renderAll();
-                            alert('Data has been reset.');
-                        }
+                try {
+                    // Restore theme
+                    const savedTheme = localStorage.getItem('bulbTheme') || 'light';
+                    if (savedTheme === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                        const toggleBtn = document.getElementById('themeToggle');
+                        if (toggleBtn) toggleBtn.textContent = '☀️';
                     }
-                });
 
-                // Initial render
-                renderAll();
+                    // Navigation
+                    document.querySelectorAll('.topbar .nav button, .sidebar button').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const page = this.dataset.page;
+                            if (page) navigate(page);
+                        });
+                    });
 
-                // Keyboard shortcut: Escape to close modal
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') closeModal();
-                });
+                    // Modal close
+                    document.getElementById('modalClose')?.addEventListener('click', closeModal);
+                    document.getElementById('modalOverlay')?.addEventListener('click', function(e) {
+                        if (e.target === this) closeModal();
+                    });
 
-                // Resize charts
-                let resizeTimer;
-                window.addEventListener('resize', function() {
-                    clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(() => {
-                        renderDashboard();
-                        renderReports();
-                    }, 300);
-                });
+                    // Add Account
+                    document.getElementById('addAccountBtn')?.addEventListener('click', function() {
+                        openModal('Add Account', `
+                            <div class="form-group"><label>Account Name</label><input id="fAccName" value="New Account" /></div>
+                            <div class="form-group"><label>Type</label><select id="fAccType"><option value="checking">Checking</option><option value="savings">Savings</option><option value="cash">Cash</option><option value="credit">Credit Card</option><option value="loan">Loan</option><option value="investment">Investment</option></select></div>
+                            <div class="form-group"><label>Balance</label><input id="fAccBalance" type="number" value="0" step="0.01" /></div>
+                            <button class="btn btn-primary" id="fAccSubmit">Create</button>
+                        `);
+                        document.getElementById('fAccSubmit')?.addEventListener('click', function() {
+                            const name = document.getElementById('fAccName').value.trim() || 'Unnamed';
+                            const type = document.getElementById('fAccType').value;
+                            const balance = parseFloat(document.getElementById('fAccBalance').value) || 0;
+                            data.accounts.push({ id: genId(), name, type, balance });
+                            persist();
+                            renderAll();
+                            closeModal();
+                        });
+                    });
+
+                    // Add Transaction
+                    document.getElementById('addTxBtn')?.addEventListener('click', function() {
+                        const accOpts = data.accounts.map(a =>
+                            `<option value="${a.id}">${a.name}</option>`).join('');
+                        openModal('Add Transaction', `
+                            <div class="form-row">
+                                <div class="form-group"><label>Date</label><input id="fTxDate" type="date" value="${todayStr()}" /></div>
+                                <div class="form-group"><label>Type</label><select id="fTxType"><option value="expense">Expense</option><option value="income">Income</option></select></div>
+                            </div>
+                            <div class="form-group"><label>Description</label><input id="fTxDesc" placeholder="Description" /></div>
+                            <div class="form-row">
+                                <div class="form-group"><label>Category</label><input id="fTxCat" placeholder="Category" /></div>
+                                <div class="form-group"><label>Amount</label><input id="fTxAmt" type="number" step="0.01" placeholder="0.00" /></div>
+                            </div>
+                            <div class="form-group"><label>Account</label><select id="fTxAcc">${accOpts}</select></div>
+                            <button class="btn btn-primary" id="fTxSubmit">Add</button>
+                        `);
+                        document.getElementById('fTxSubmit')?.addEventListener('click', function() {
+                            const date = document.getElementById('fTxDate').value || todayStr();
+                            const type = document.getElementById('fTxType').value;
+                            const desc = document.getElementById('fTxDesc').value.trim() || 'Transaction';
+                            const cat = document.getElementById('fTxCat').value.trim() || 'Other';
+                            const amount = parseFloat(document.getElementById('fTxAmt').value);
+                            const accId = document.getElementById('fTxAcc').value;
+                            if (!amount || amount <= 0) { alert('Please enter a valid amount.'); return; }
+                            if (!accId) { alert('Please select an account.'); return; }
+                            data.transactions.push({ id: genId(), accountId: accId, category: cat, amount,
+                                date, description: desc, type });
+                            const acc = getAccount(accId);
+                            if (acc) acc.balance += (type === 'income' ? amount : -amount);
+                            persist();
+                            renderAll();
+                            closeModal();
+                        });
+                    });
+
+                    // Add Budget
+                    document.getElementById('addBudgetBtn')?.addEventListener('click', function() {
+                        openModal('Add Budget', `
+                            <div class="form-group"><label>Category</label><input id="fBudCat" placeholder="Category" /></div>
+                            <div class="form-group"><label>Monthly Limit</label><input id="fBudAmt" type="number" step="0.01" placeholder="0.00" /></div>
+                            <button class="btn btn-primary" id="fBudSubmit">Create</button>
+                        `);
+                        document.getElementById('fBudSubmit')?.addEventListener('click', function() {
+                            const cat = document.getElementById('fBudCat').value.trim() || 'Other';
+                            const amount = parseFloat(document.getElementById('fBudAmt').value);
+                            if (!amount || amount <= 0) { alert('Enter a valid amount.'); return; }
+                            data.budgets.push({ id: genId(), category: cat, amount });
+                            persist();
+                            renderAll();
+                            closeModal();
+                        });
+                    });
+
+                    // Add Goal
+                    document.getElementById('addGoalBtn')?.addEventListener('click', function() {
+                        openModal('Add Savings Goal', `
+                            <div class="form-group"><label>Goal Name</label><input id="fGoalName" placeholder="e.g. New Car" /></div>
+                            <div class="form-group"><label>Target Amount</label><input id="fGoalTarget" type="number" step="0.01" placeholder="0.00" /></div>
+                            <div class="form-group"><label>Current Saved</label><input id="fGoalCurrent" type="number" step="0.01" placeholder="0.00" value="0" /></div>
+                            <div class="form-group"><label>Deadline</label><input id="fGoalDeadline" type="date" value="${todayStr()}" /></div>
+                            <button class="btn btn-primary" id="fGoalSubmit">Create</button>
+                        `);
+                        document.getElementById('fGoalSubmit')?.addEventListener('click', function() {
+                            const name = document.getElementById('fGoalName').value.trim() || 'Goal';
+                            const target = parseFloat(document.getElementById('fGoalTarget').value);
+                            const current = parseFloat(document.getElementById('fGoalCurrent').value) || 0;
+                            const deadline = document.getElementById('fGoalDeadline').value || todayStr();
+                            if (!target || target <= 0) { alert('Enter a valid target amount.'); return; }
+                            data.goals.push({ id: genId(), name, target, current, deadline });
+                            persist();
+                            renderAll();
+                            closeModal();
+                        });
+                    });
+
+                    // Add Bill
+                    document.getElementById('addBillBtn')?.addEventListener('click', function() {
+                        openModal('Add Bill', `
+                            <div class="form-group"><label>Bill Name</label><input id="fBillName" placeholder="e.g. Rent" /></div>
+                            <div class="form-group"><label>Amount</label><input id="fBillAmt" type="number" step="0.01" placeholder="0.00" /></div>
+                            <div class="form-group"><label>Due Date</label><input id="fBillDate" type="date" value="${todayStr()}" /></div>
+                            <div class="form-group"><label><input type="checkbox" id="fBillRecurring" checked /> Recurring</label></div>
+                            <button class="btn btn-primary" id="fBillSubmit">Add</button>
+                        `);
+                        document.getElementById('fBillSubmit')?.addEventListener('click', function() {
+                            const name = document.getElementById('fBillName').value.trim() || 'Bill';
+                            const amount = parseFloat(document.getElementById('fBillAmt').value);
+                            const dueDate = document.getElementById('fBillDate').value || todayStr();
+                            const recurring = document.getElementById('fBillRecurring').checked;
+                            if (!amount || amount <= 0) { alert('Enter a valid amount.'); return; }
+                            data.bills.push({ id: genId(), name, amount, dueDate, recurring, paid: false });
+                            persist();
+                            renderAll();
+                            closeModal();
+                        });
+                    });
+
+                    // Transaction filters
+                    document.getElementById('txSearch')?.addEventListener('input', renderTransactions);
+                    document.getElementById('txFilterType')?.addEventListener('change', renderTransactions);
+                    document.getElementById('txFilterAccount')?.addEventListener('change', renderTransactions);
+                    document.getElementById('txClearFilters')?.addEventListener('click', function() {
+                        const search = document.getElementById('txSearch');
+                        const type = document.getElementById('txFilterType');
+                        const acc = document.getElementById('txFilterAccount');
+                        if (search) search.value = '';
+                        if (type) type.value = '';
+                        if (acc) acc.value = '';
+                        renderTransactions();
+                    });
+
+                    // Settings
+                    document.getElementById('settingsBackup')?.addEventListener('click', backupData);
+                    document.getElementById('settingsRestoreBtn')?.addEventListener('click', function() {
+                        document.getElementById('settingsRestoreInput')?.click();
+                    });
+                    document.getElementById('settingsRestoreInput')?.addEventListener('change', function(e) {
+                        if (this.files && this.files[0]) restoreData(this.files[0]);
+                        this.value = '';
+                    });
+                    document.getElementById('settingsExportXML')?.addEventListener('click', exportXML);
+                    document.getElementById('settingsImportXMLBtn')?.addEventListener('click', function() {
+                        document.getElementById('settingsImportXMLInput')?.click();
+                    });
+                    document.getElementById('settingsImportXMLInput')?.addEventListener('change', function(e) {
+                        if (this.files && this.files[0]) importXML(this.files[0]);
+                        this.value = '';
+                    });
+                    document.getElementById('settingsReset')?.addEventListener('click', function() {
+                        if (confirm('⚠️ Permanently delete ALL data? This cannot be undone.')) {
+                            if (confirm('Are you sure?')) {
+                                saveData(defaultData());
+                                renderAll();
+                                alert('Data has been reset.');
+                            }
+                        }
+                    });
+
+                    // Theme toggle (both places)
+                    document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+                    document.getElementById('settingsThemeToggle')?.addEventListener('click', toggleTheme);
+
+                    // Keyboard shortcut: Escape to close modal
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') closeModal();
+                    });
+
+                    // Resize charts
+                    let resizeTimer;
+                    window.addEventListener('resize', function() {
+                        clearTimeout(resizeTimer);
+                        resizeTimer = setTimeout(() => {
+                            renderDashboard();
+                            renderReports();
+                        }, 300);
+                    });
+
+                    // Initial render
+                    renderAll();
+
+                } catch (err) {
+                    console.error('Init error:', err);
+                    // Still hide splash even if there's an error
+                    hideSplash();
+                }
+            }
+
+            // ---------- SPLASH HANDLING ----------
+            // Hide splash on click anywhere
+            document.getElementById('splash')?.addEventListener('click', hideSplash);
+
+            // Hide splash after a short delay, with fallback timers
+            function scheduleSplashHide() {
+                // Primary: hide after 800ms
+                setTimeout(hideSplash, 800);
+
+                // Fallback 1: hide after 2 seconds (if primary fails)
+                setTimeout(hideSplash, 2000);
+
+                // Fallback 2: hide after 4 seconds (absolute max)
+                setTimeout(hideSplash, 4000);
             }
 
             // ---------- START ----------
-            document.addEventListener('DOMContentLoaded', init);
+            document.addEventListener('DOMContentLoaded', function() {
+                // Schedule splash hide
+                scheduleSplashHide();
+
+                // Initialize the app
+                try {
+                    init();
+                } catch (err) {
+                    console.error('Init error:', err);
+                    // Ensure splash is hidden even if init crashes
+                    hideSplash();
+                }
+            });
+
+            // Also try to hide splash immediately if DOM is already loaded
+            if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                scheduleSplashHide();
+                try {
+                    init();
+                } catch (err) {
+                    console.error('Init error:', err);
+                    hideSplash();
+                }
+            }
 
         })();
     </script>
