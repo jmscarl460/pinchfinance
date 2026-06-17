@@ -87,130 +87,11 @@
             background: var(--primary);
         }
 
-        /* ----- SPLASH SCREEN ----- */
-        #splash {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-            cursor: pointer;
-        }
-        #splash.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        #splash .logo-box {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            padding: 32px 48px 28px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            min-width: 260px;
-            pointer-events: none;
-        }
-        #splash .logo-box .bulb-icon {
-            font-size: 3.4rem;
-            display: block;
-            margin-bottom: 2px;
-            filter: drop-shadow(0 0 30px var(--primary-glow));
-        }
-        #splash .logo-box h1 {
-            font-size: 2rem;
-            font-weight: 300;
-            color: var(--primary);
-            letter-spacing: 1px;
-        }
-        #splash .logo-box h1 span {
-            font-weight: 700;
-            color: var(--text);
-        }
-        #splash .logo-box .sub {
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-        #splash .logo-box .year {
-            color: var(--text-light);
-            font-size: 0.85rem;
-            font-weight: 300;
-            margin-top: 2px;
-        }
-        #splash .loader-wrap {
-            margin-top: 18px;
-            width: 180px;
-            height: 3px;
-            background: rgba(0, 122, 138, 0.15);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-            pointer-events: none;
-        }
-        #splash .loader-wrap .bar {
-            position: absolute;
-            left: -50%;
-            width: 50%;
-            height: 100%;
-            background: var(--primary-light);
-            border-radius: 4px;
-            animation: loadSlide 1.2s ease-in-out infinite;
-        }
-        @keyframes loadSlide {
-            0% {
-                left: -50%;
-                width: 50%;
-            }
-            50% {
-                width: 80%;
-            }
-            100% {
-                left: 100%;
-                width: 30%;
-            }
-        }
-        #splash .version {
-            margin-top: 14px;
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            pointer-events: none;
-        }
-        #splash .click-hint {
-            margin-top: 16px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            opacity: 0.5;
-            pointer-events: none;
-            animation: pulse 1.8s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%,
-            100% {
-                opacity: 0.4;
-            }
-            50% {
-                opacity: 0.9;
-            }
-        }
-
-        /* ----- APP SHELL ----- */
+        /* ----- APP SHELL (always visible) ----- */
         #app {
             display: flex;
             flex-direction: column;
             height: 100vh;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        #app.visible {
             opacity: 1;
         }
 
@@ -976,19 +857,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ===== SPLASH SCREEN ===== -->
-    <div id="splash">
-        <div class="logo-box">
-            <span class="bulb-icon">💡</span>
-            <h1>Bulb<span>Finance</span></h1>
-            <div class="year">2026</div>
-            <div class="sub">Personal Finance · Desktop Edition</div>
-            <div class="loader-wrap"><div class="bar"></div></div>
-            <div class="version">v2.0 · Windows Vista Aero</div>
-            <div class="click-hint">click anywhere to continue</div>
-        </div>
-    </div>
 
     <!-- ===== APP ===== -->
     <div id="app">
@@ -2064,14 +1932,6 @@
                 reader.readAsText(file);
             }
 
-            // ---------- SPLASH CONTROL ----------
-            function hideSplash() {
-                const splash = document.getElementById('splash');
-                const app = document.getElementById('app');
-                if (splash) splash.classList.add('hidden');
-                if (app) app.classList.add('visible');
-            }
-
             // ---------- INIT ----------
             function init() {
                 try {
@@ -2279,51 +2139,15 @@
 
                 } catch (err) {
                     console.error('Init error:', err);
-                    // Still hide splash even if there's an error
-                    hideSplash();
                 }
-            }
-
-            // ---------- SPLASH HANDLING ----------
-            // Hide splash on click anywhere
-            document.getElementById('splash')?.addEventListener('click', hideSplash);
-
-            // Hide splash after a short delay, with fallback timers
-            function scheduleSplashHide() {
-                // Primary: hide after 800ms
-                setTimeout(hideSplash, 800);
-
-                // Fallback 1: hide after 2 seconds (if primary fails)
-                setTimeout(hideSplash, 2000);
-
-                // Fallback 2: hide after 4 seconds (absolute max)
-                setTimeout(hideSplash, 4000);
             }
 
             // ---------- START ----------
-            document.addEventListener('DOMContentLoaded', function() {
-                // Schedule splash hide
-                scheduleSplashHide();
-
-                // Initialize the app
-                try {
-                    init();
-                } catch (err) {
-                    console.error('Init error:', err);
-                    // Ensure splash is hidden even if init crashes
-                    hideSplash();
-                }
-            });
-
-            // Also try to hide splash immediately if DOM is already loaded
-            if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                scheduleSplashHide();
-                try {
-                    init();
-                } catch (err) {
-                    console.error('Init error:', err);
-                    hideSplash();
-                }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                // DOM already loaded
+                init();
             }
 
         })();
