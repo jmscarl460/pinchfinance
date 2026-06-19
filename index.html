@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Money2005 Financial Suite — Beta 1.0.24</title>
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ── RESET & BASE ── */
         * {
@@ -12,7 +18,7 @@
             padding: 0;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Poppins', sans-serif;
             background: #f0f2f5;
             color: #1a1a2e;
             transition: background 0.3s, color 0.3s;
@@ -126,6 +132,7 @@
             letter-spacing: -0.5px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.06);
             margin-bottom: 10px;
+            font-family: 'Poppins', sans-serif;
         }
         body.dark #sidebar .brand {
             border-color: rgba(255, 255, 255, 0.06);
@@ -135,6 +142,7 @@
             font-size: 12px;
             opacity: 0.6;
             display: block;
+            font-family: 'Inter', sans-serif;
         }
 
         .nav-item {
@@ -147,6 +155,7 @@
             gap: 10px;
             font-size: 14px;
             font-weight: 500;
+            font-family: 'Inter', sans-serif;
         }
         .nav-item:hover {
             background: rgba(0, 0, 0, 0.06);
@@ -189,12 +198,14 @@
             font-size: 18px;
             font-weight: 600;
             font-variant-numeric: tabular-nums;
+            font-family: 'Inter', sans-serif;
         }
         #topbar .user-badge {
             display: flex;
             align-items: center;
             gap: 12px;
             font-size: 14px;
+            flex-wrap: wrap;
         }
         #topbar .user-badge .avatar {
             width: 36px;
@@ -207,8 +218,9 @@
             justify-content: center;
             font-weight: 700;
             font-size: 16px;
+            font-family: 'Poppins', sans-serif;
         }
-        .theme-toggle {
+        .theme-toggle, .lang-select {
             background: none;
             border: 1px solid rgba(0, 0, 0, 0.15);
             border-radius: 20px;
@@ -216,15 +228,24 @@
             cursor: pointer;
             font-size: 13px;
             transition: background 0.2s;
+            font-family: 'Inter', sans-serif;
         }
-        body.dark .theme-toggle {
+        body.dark .theme-toggle, body.dark .lang-select {
             border-color: rgba(255, 255, 255, 0.15);
         }
-        .theme-toggle:hover {
+        .theme-toggle:hover, .lang-select:hover {
             background: rgba(0, 0, 0, 0.05);
         }
-        body.dark .theme-toggle:hover {
+        body.dark .theme-toggle:hover, body.dark .lang-select:hover {
             background: rgba(255, 255, 255, 0.05);
+        }
+        .lang-select {
+            appearance: auto;
+            background: transparent;
+            color: inherit;
+        }
+        body.dark .lang-select option {
+            background: #1a1a2e;
         }
 
         /* ── PAGES ── */
@@ -251,6 +272,7 @@
             font-weight: 700;
             margin-bottom: 20px;
             letter-spacing: -0.3px;
+            font-family: 'Poppins', sans-serif;
         }
 
         /* ── CARDS / PANELS ── */
@@ -295,6 +317,7 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 14px;
+            font-family: 'Poppins', sans-serif;
         }
 
         /* ── FORMS ── */
@@ -306,6 +329,7 @@
             font-weight: 500;
             font-size: 14px;
             margin-bottom: 4px;
+            font-family: 'Inter', sans-serif;
         }
         .form-control {
             width: 100%;
@@ -316,7 +340,7 @@
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(4px);
             transition: border-color 0.2s, box-shadow 0.2s;
-            font-family: inherit;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .form-control {
             background: rgba(50, 50, 75, 0.6);
@@ -349,6 +373,7 @@
             gap: 8px;
             background: #0078ff;
             color: #fff;
+            font-family: 'Inter', sans-serif;
         }
         .btn:hover {
             background: #0066dd;
@@ -403,14 +428,14 @@
         }
 
         /* ── NUMERICAL KEYPAD ── */
-        #numpad {
+        #numpad, #numpad-calc {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 6px;
             max-width: 240px;
             margin: 10px 0;
         }
-        #numpad button {
+        #numpad button, #numpad-calc button {
             padding: 12px 0;
             font-size: 18px;
             border: 1px solid rgba(0, 0, 0, 0.1);
@@ -419,16 +444,17 @@
             cursor: pointer;
             transition: background 0.15s;
             font-weight: 600;
+            font-family: 'Inter', sans-serif;
         }
-        body.dark #numpad button {
+        body.dark #numpad button, body.dark #numpad-calc button {
             background: rgba(60, 60, 90, 0.6);
             border-color: rgba(255, 255, 255, 0.1);
             color: #e0e0e0;
         }
-        #numpad button:hover {
+        #numpad button:hover, #numpad-calc button:hover {
             background: rgba(0, 120, 255, 0.15);
         }
-        #numpad button:active {
+        #numpad button:active, #numpad-calc button:active {
             transform: scale(0.95);
         }
 
@@ -444,6 +470,7 @@
             font-size: 12px;
             opacity: 0.6;
             padding: 6px 0;
+            font-family: 'Inter', sans-serif;
         }
         .calendar-grid .day {
             padding: 8px 4px;
@@ -456,6 +483,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            font-family: 'Inter', sans-serif;
         }
         .calendar-grid .day:hover {
             background: rgba(0, 120, 255, 0.1);
@@ -483,6 +511,7 @@
             padding: 4px 14px;
             cursor: pointer;
             font-size: 16px;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .calendar-nav button {
             border-color: rgba(255, 255, 255, 0.1);
@@ -500,6 +529,10 @@
             padding: 10px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
             font-size: 14px;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .tx-item {
             border-color: rgba(255, 255, 255, 0.04);
@@ -525,6 +558,9 @@
             align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            flex-wrap: wrap;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .goal-item {
             border-color: rgba(255, 255, 255, 0.04);
@@ -532,6 +568,7 @@
         .goal-item .goal-progress {
             flex: 1;
             margin: 0 16px;
+            min-width: 120px;
         }
         .goal-item .goal-progress .bar {
             height: 6px;
@@ -586,6 +623,7 @@
             width: 90%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             text-align: center;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .custom-alert-box {
             background: #2a2a4a;
@@ -593,6 +631,7 @@
         .custom-alert-box h4 {
             font-size: 20px;
             margin-bottom: 12px;
+            font-family: 'Poppins', sans-serif;
         }
         .custom-alert-box p {
             opacity: 0.8;
@@ -615,6 +654,7 @@
             z-index: 10000;
             display: none;
             border: 1px solid rgba(0, 0, 0, 0.06);
+            font-family: 'Inter', sans-serif;
         }
         body.dark #context-menu {
             background: rgba(40, 40, 65, 0.92);
@@ -663,7 +703,7 @@
             .row>* {
                 flex: 1 1 100%;
             }
-            #numpad {
+            #numpad, #numpad-calc {
                 max-width: 100%;
             }
         }
@@ -719,6 +759,7 @@
             font-weight: 600;
             background: rgba(0, 120, 255, 0.15);
             color: #0078ff;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .badge {
             background: rgba(0, 120, 255, 0.2);
@@ -738,6 +779,7 @@
             font-weight: 500;
             font-size: 13px;
             transition: background 0.15s;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .currency-selector .curr-btn {
             border-color: rgba(255, 255, 255, 0.1);
@@ -756,6 +798,7 @@
             padding: 8px 0;
             font-size: 14px;
             opacity: 0.8;
+            font-family: 'Inter', sans-serif;
         }
         .news-ticker span {
             display: inline-block;
@@ -779,6 +822,7 @@
             text-align: center;
             transition: background 0.2s, border-color 0.2s;
             cursor: pointer;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .drop-zone {
             border-color: rgba(255, 255, 255, 0.1);
@@ -799,6 +843,7 @@
             border-radius: 12px;
             font-weight: 600;
             text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
         }
         .role-badge.admin {
             background: #dc3545;
@@ -828,6 +873,7 @@
             border-radius: 0 8px 8px 0;
             margin: 12px 0;
             font-size: 14px;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .advisor-tip {
             background: rgba(0, 120, 255, 0.08);
@@ -842,6 +888,7 @@
             text-align: center;
             font-size: 13px;
             color: #888;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .silverlight-placeholder {
             background: rgba(255, 255, 255, 0.02);
@@ -857,6 +904,7 @@
             margin-top: 30px;
             border-top: 1px solid rgba(0, 0, 0, 0.04);
             padding-top: 16px;
+            font-family: 'Inter', sans-serif;
         }
         body.dark .ie-hint {
             border-color: rgba(255, 255, 255, 0.04);
@@ -960,6 +1008,21 @@
                 color: #000 !important;
             }
         }
+
+        /* RTL support for Arabic */
+        body[dir="rtl"] #sidebar {
+            border-right: none;
+            border-left: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        body[dir="rtl"] .advisor-tip {
+            border-left: none;
+            border-right: 3px solid #0078ff;
+            border-radius: 8px 0 0 8px;
+        }
+        body[dir="rtl"] .nav-item .icon {
+            margin-left: 10px;
+            margin-right: 0;
+        }
     </style>
 </head>
 <body>
@@ -969,11 +1032,11 @@
 
     <!-- ─── CONTEXT MENU ─── -->
     <div id="context-menu">
-        <div class="ctx-item" data-action="copy">📋 Copy</div>
-        <div class="ctx-item" data-action="paste">📄 Paste</div>
-        <div class="ctx-item" data-action="delete">🗑️ Delete</div>
-        <div class="ctx-item" data-action="edit">✏️ Edit</div>
-        <div class="ctx-item" data-action="refresh">🔄 Refresh</div>
+        <div class="ctx-item" data-action="copy"><i class="fas fa-copy"></i> Copy</div>
+        <div class="ctx-item" data-action="paste"><i class="fas fa-paste"></i> Paste</div>
+        <div class="ctx-item" data-action="delete"><i class="fas fa-trash"></i> Delete</div>
+        <div class="ctx-item" data-action="edit"><i class="fas fa-edit"></i> Edit</div>
+        <div class="ctx-item" data-action="refresh"><i class="fas fa-sync"></i> Refresh</div>
     </div>
 
     <!-- ─── APP ─── -->
@@ -982,21 +1045,21 @@
         <!-- SIDEBAR -->
         <div id="sidebar">
             <div class="brand">
-                💰 Money2005
+                <i class="fas fa-coins"></i> Money2005
                 <small>Beta 1.0.24</small>
             </div>
-            <div class="nav-item active" data-page="dashboard"><span class="icon">📊</span><span>Dashboard</span></div>
-            <div class="nav-item" data-page="accounts"><span class="icon">🏦</span><span>Accounts</span></div>
-            <div class="nav-item" data-page="transactions"><span class="icon">📋</span><span>Transactions</span></div>
-            <div class="nav-item" data-page="goals"><span class="icon">🎯</span><span>Goals</span></div>
-            <div class="nav-item" data-page="billing"><span class="icon">📅</span><span>Billing</span></div>
-            <div class="nav-item" data-page="cards"><span class="icon">💳</span><span>Cards</span></div>
-            <div class="nav-item" data-page="calculator"><span class="icon">🧮</span><span>Calculator</span></div>
-            <div class="nav-item" data-page="banks"><span class="icon">🌐</span><span>Banks</span></div>
-            <div class="nav-item" data-page="settings"><span class="icon">⚙️</span><span>Settings</span></div>
-            <div class="nav-item" data-page="feedback"><span class="icon">💬</span><span>Feedback</span></div>
+            <div class="nav-item active" data-page="dashboard"><span class="icon"><i class="fas fa-chart-pie"></i></span><span data-i18n="nav_dashboard">Dashboard</span></div>
+            <div class="nav-item" data-page="accounts"><span class="icon"><i class="fas fa-university"></i></span><span data-i18n="nav_accounts">Accounts</span></div>
+            <div class="nav-item" data-page="transactions"><span class="icon"><i class="fas fa-list-ul"></i></span><span data-i18n="nav_transactions">Transactions</span></div>
+            <div class="nav-item" data-page="goals"><span class="icon"><i class="fas fa-bullseye"></i></span><span data-i18n="nav_goals">Goals</span></div>
+            <div class="nav-item" data-page="billing"><span class="icon"><i class="fas fa-calendar-alt"></i></span><span data-i18n="nav_billing">Billing</span></div>
+            <div class="nav-item" data-page="cards"><span class="icon"><i class="fas fa-credit-card"></i></span><span data-i18n="nav_cards">Cards</span></div>
+            <div class="nav-item" data-page="calculator"><span class="icon"><i class="fas fa-calculator"></i></span><span data-i18n="nav_calculator">Calculator</span></div>
+            <div class="nav-item" data-page="banks"><span class="icon"><i class="fas fa-globe"></i></span><span data-i18n="nav_banks">Banks</span></div>
+            <div class="nav-item" data-page="settings"><span class="icon"><i class="fas fa-cog"></i></span><span data-i18n="nav_settings">Settings</span></div>
+            <div class="nav-item" data-page="feedback"><span class="icon"><i class="fas fa-comment-dots"></i></span><span data-i18n="nav_feedback">Feedback</span></div>
             <div style="flex:1"></div>
-            <div class="nav-item" id="signout-btn" style="color:#dc3545;"><span class="icon">🚪</span><span>Sign Out</span></div>
+            <div class="nav-item" id="signout-btn" style="color:#dc3545;"><span class="icon"><i class="fas fa-sign-out-alt"></i></span><span data-i18n="nav_signout">Sign Out</span></div>
         </div>
 
         <!-- MAIN -->
@@ -1009,48 +1072,56 @@
                     <span id="user-role-badge" class="role-badge user">User</span>
                     <span id="user-name-display">Guest</span>
                     <div class="avatar" id="user-avatar">G</div>
-                    <button class="theme-toggle" id="theme-toggle-btn">🌓 Theme</button>
-                    <button class="theme-toggle" id="theme-cycle-btn">🎨 Style</button>
+                    <select class="lang-select" id="lang-select">
+                        <option value="en">🇬🇧 English</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="zh">🇨🇳 中文</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="ko">🇰🇷 한국어</option>
+                        <option value="fil">🇵🇭 Filipino</option>
+                    </select>
+                    <button class="theme-toggle" id="theme-toggle-btn"><i class="fas fa-moon"></i></button>
+                    <button class="theme-toggle" id="theme-cycle-btn"><i class="fas fa-palette"></i></button>
                 </div>
             </div>
 
             <!-- ─── DASHBOARD ─── -->
             <div class="page active" id="page-dashboard">
-                <div class="page-title">📊 Dashboard</div>
+                <div class="page-title"><i class="fas fa-chart-pie"></i> <span data-i18n="dashboard_title">Dashboard</span></div>
                 <div class="panel">
                     <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-                        <div><strong>Net Worth</strong><br><span id="net-worth-display" style="font-size:28px;font-weight:700;">$0.00</span></div>
-                        <div><strong>Total Income</strong><br><span id="total-income-display" style="font-size:22px;color:#28a745;">$0.00</span></div>
-                        <div><strong>Total Expenses</strong><br><span id="total-expense-display" style="font-size:22px;color:#dc3545;">$0.00</span></div>
-                        <div><strong>Savings</strong><br><span id="total-savings-display" style="font-size:22px;color:#0078ff;">$0.00</span></div>
+                        <div><strong data-i18n="net_worth">Net Worth</strong><br><span id="net-worth-display" style="font-size:28px;font-weight:700;">$0.00</span></div>
+                        <div><strong data-i18n="total_income">Total Income</strong><br><span id="total-income-display" style="font-size:22px;color:#28a745;">$0.00</span></div>
+                        <div><strong data-i18n="total_expenses">Total Expenses</strong><br><span id="total-expense-display" style="font-size:22px;color:#dc3545;">$0.00</span></div>
+                        <div><strong data-i18n="total_savings">Savings</strong><br><span id="total-savings-display" style="font-size:22px;color:#0078ff;">$0.00</span></div>
                     </div>
                 </div>
                 <div class="panel">
-                    <h3>📈 Net Worth Trend</h3>
+                    <h3><i class="fas fa-chart-line"></i> <span data-i18n="net_worth_trend">Net Worth Trend</span></h3>
                     <div id="trend-chart"><canvas id="trendCanvas"></canvas></div>
                 </div>
                 <div class="panel">
-                    <h3>📰 Finance News</h3>
+                    <h3><i class="fas fa-newspaper"></i> <span data-i18n="finance_news">Finance News</span></h3>
                     <div class="news-ticker" id="news-ticker"><span>Loading news...</span></div>
                 </div>
                 <div class="panel">
-                    <h3>💡 AdvisorFYI</h3>
+                    <h3><i class="fas fa-lightbulb"></i> <span data-i18n="advisor_fyi">AdvisorFYI</span></h3>
                     <div class="advisor-tip" id="advisor-tip">Welcome! Start by adding your accounts and tracking your spending.</div>
                 </div>
             </div>
 
             <!-- ─── ACCOUNTS ─── -->
             <div class="page" id="page-accounts">
-                <div class="page-title">🏦 Accounts</div>
+                <div class="page-title"><i class="fas fa-university"></i> <span data-i18n="accounts_title">Accounts</span></div>
                 <div class="panel">
-                    <h3>Create Account</h3>
+                    <h3><i class="fas fa-plus-circle"></i> <span data-i18n="create_account">Create Account</span></h3>
                     <div class="row">
                         <div class="form-group">
-                            <label>Account Name</label>
+                            <label data-i18n="account_name">Account Name</label>
                             <input class="form-control" id="acc-name" placeholder="e.g. Savings">
                         </div>
                         <div class="form-group">
-                            <label>Currency</label>
+                            <label data-i18n="currency">Currency</label>
                             <select class="form-control" id="acc-currency">
                                 <option value="USD">USD $</option><option value="EUR">EUR €</option>
                                 <option value="GBP">GBP £</option><option value="JPY">JPY ¥</option>
@@ -1062,171 +1133,177 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Initial Balance</label>
+                            <label data-i18n="initial_balance">Initial Balance</label>
                             <input class="form-control" id="acc-balance" placeholder="0.00" value="0.00">
                         </div>
                     </div>
                     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
-                        <button class="btn" id="create-account-btn">➕ Create Account</button>
-                        <button class="btn btn-secondary" id="create-zero-btn">0️⃣ Zero Balance</button>
+                        <button class="btn" id="create-account-btn"><i class="fas fa-plus"></i> <span data-i18n="create_btn">Create Account</span></button>
+                        <button class="btn btn-secondary" id="create-zero-btn"><i class="fas fa-zero"></i> <span data-i18n="zero_balance">Zero Balance</span></button>
                     </div>
-                    <div id="numpad" style="margin-top:12px;"></div>
+                    <div id="numpad"></div>
                 </div>
                 <div class="panel">
-                    <h3>Your Accounts</h3>
-                    <div id="account-list"><p class="text-muted">No accounts yet.</p></div>
+                    <h3><i class="fas fa-list"></i> <span data-i18n="your_accounts">Your Accounts</span></h3>
+                    <div id="account-list"><p class="text-muted" data-i18n="no_accounts">No accounts yet.</p></div>
                 </div>
             </div>
 
             <!-- ─── TRANSACTIONS ─── -->
             <div class="page" id="page-transactions">
-                <div class="page-title">📋 Transactions</div>
+                <div class="page-title"><i class="fas fa-list-ul"></i> <span data-i18n="transactions_title">Transactions</span></div>
                 <div class="panel">
-                    <h3>Add Transaction</h3>
+                    <h3><i class="fas fa-plus-circle"></i> <span data-i18n="add_transaction">Add Transaction</span></h3>
                     <div class="row">
                         <div class="form-group">
-                            <label>Account</label>
+                            <label data-i18n="account">Account</label>
                             <select class="form-control" id="tx-account"></select>
                         </div>
                         <div class="form-group">
-                            <label>Category</label>
+                            <label data-i18n="category">Category</label>
                             <select class="form-control" id="tx-category">
-                                <option value="Income">Income</option><option value="Food">Food</option>
-                                <option value="Transport">Transport</option><option value="Shopping">Shopping</option>
-                                <option value="Entertainment">Entertainment</option><option value="Bills">Bills</option>
-                                <option value="Health">Health</option><option value="Education">Education</option>
-                                <option value="Savings">Savings</option><option value="Other">Other</option>
+                                <option value="Income" data-i18n="cat_income">Income</option>
+                                <option value="Food" data-i18n="cat_food">Food</option>
+                                <option value="Transport" data-i18n="cat_transport">Transport</option>
+                                <option value="Shopping" data-i18n="cat_shopping">Shopping</option>
+                                <option value="Entertainment" data-i18n="cat_entertainment">Entertainment</option>
+                                <option value="Bills" data-i18n="cat_bills">Bills</option>
+                                <option value="Health" data-i18n="cat_health">Health</option>
+                                <option value="Education" data-i18n="cat_education">Education</option>
+                                <option value="Savings" data-i18n="cat_savings">Savings</option>
+                                <option value="Other" data-i18n="cat_other">Other</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Amount</label>
+                            <label data-i18n="amount">Amount</label>
                             <input class="form-control" id="tx-amount" placeholder="0.00">
                         </div>
                         <div class="form-group">
-                            <label>Type</label>
+                            <label data-i18n="type">Type</label>
                             <select class="form-control" id="tx-type">
-                                <option value="income">Income</option><option value="expense">Expense</option>
+                                <option value="income" data-i18n="type_income">Income</option>
+                                <option value="expense" data-i18n="type_expense">Expense</option>
                             </select>
                         </div>
                     </div>
                     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
-                        <button class="btn btn-success" id="add-tx-btn">➕ Add</button>
-                        <button class="btn btn-secondary" id="clear-tx-btn">🗑️ Clear</button>
+                        <button class="btn btn-success" id="add-tx-btn"><i class="fas fa-plus"></i> <span data-i18n="add_btn">Add</span></button>
+                        <button class="btn btn-secondary" id="clear-tx-btn"><i class="fas fa-eraser"></i> <span data-i18n="clear_btn">Clear</span></button>
                     </div>
                 </div>
                 <div class="panel">
-                    <h3>Transaction History</h3>
-                    <div class="tx-list" id="tx-list"><p class="text-muted">No transactions.</p></div>
+                    <h3><i class="fas fa-history"></i> <span data-i18n="transaction_history">Transaction History</span></h3>
+                    <div class="tx-list" id="tx-list"><p class="text-muted" data-i18n="no_transactions">No transactions.</p></div>
                 </div>
             </div>
 
             <!-- ─── GOALS ─── -->
             <div class="page" id="page-goals">
-                <div class="page-title">🎯 Savings Goals</div>
+                <div class="page-title"><i class="fas fa-bullseye"></i> <span data-i18n="goals_title">Savings Goals</span></div>
                 <div class="panel">
-                    <h3>New Goal</h3>
+                    <h3><i class="fas fa-plus-circle"></i> <span data-i18n="new_goal">New Goal</span></h3>
                     <div class="row">
                         <div class="form-group">
-                            <label>Goal Name</label>
+                            <label data-i18n="goal_name">Goal Name</label>
                             <input class="form-control" id="goal-name" placeholder="e.g. Vacation">
                         </div>
                         <div class="form-group">
-                            <label>Target Amount</label>
+                            <label data-i18n="target_amount">Target Amount</label>
                             <input class="form-control" id="goal-target" placeholder="1000">
                         </div>
                         <div class="form-group">
-                            <label>Saved So Far</label>
+                            <label data-i18n="saved_so_far">Saved So Far</label>
                             <input class="form-control" id="goal-saved" placeholder="0">
                         </div>
                     </div>
-                    <button class="btn" id="add-goal-btn">➕ Add Goal</button>
+                    <button class="btn" id="add-goal-btn"><i class="fas fa-plus"></i> <span data-i18n="add_goal">Add Goal</span></button>
                 </div>
                 <div class="panel">
-                    <h3>Your Goals</h3>
-                    <div id="goal-list"><p class="text-muted">No goals set.</p></div>
+                    <h3><i class="fas fa-list"></i> <span data-i18n="your_goals">Your Goals</span></h3>
+                    <div id="goal-list"><p class="text-muted" data-i18n="no_goals">No goals set.</p></div>
                 </div>
             </div>
 
             <!-- ─── BILLING ─── -->
             <div class="page" id="page-billing">
-                <div class="page-title">📅 Billing & Calendar</div>
+                <div class="page-title"><i class="fas fa-calendar-alt"></i> <span data-i18n="billing_title">Billing & Calendar</span></div>
                 <div class="panel">
-                    <h3>Calendar</h3>
+                    <h3><i class="fas fa-calendar"></i> <span data-i18n="calendar">Calendar</span></h3>
                     <div class="calendar-nav">
-                        <button id="cal-prev">◀</button>
+                        <button id="cal-prev"><i class="fas fa-chevron-left"></i></button>
                         <span id="cal-title" style="font-weight:600;">January 2025</span>
-                        <button id="cal-next">▶</button>
+                        <button id="cal-next"><i class="fas fa-chevron-right"></i></button>
                     </div>
                     <div class="calendar-grid" id="calendar-grid"></div>
                 </div>
                 <div class="panel">
-                    <h3>Add Billing Event</h3>
+                    <h3><i class="fas fa-plus-circle"></i> <span data-i18n="add_billing">Add Billing Event</span></h3>
                     <div class="row">
                         <div class="form-group">
-                            <label>Date</label>
+                            <label data-i18n="date">Date</label>
                             <input class="form-control" id="bill-date" type="date">
                         </div>
                         <div class="form-group">
-                            <label>Description</label>
+                            <label data-i18n="description">Description</label>
                             <input class="form-control" id="bill-desc" placeholder="e.g. Electricity bill">
                         </div>
                         <div class="form-group">
-                            <label>Amount</label>
+                            <label data-i18n="amount">Amount</label>
                             <input class="form-control" id="bill-amount" placeholder="0.00">
                         </div>
                     </div>
-                    <button class="btn" id="add-bill-btn">➕ Add Bill</button>
+                    <button class="btn" id="add-bill-btn"><i class="fas fa-plus"></i> <span data-i18n="add_bill">Add Bill</span></button>
                 </div>
                 <div class="panel">
-                    <h3>Upcoming Bills</h3>
-                    <div id="bill-list"><p class="text-muted">No bills scheduled.</p></div>
+                    <h3><i class="fas fa-list"></i> <span data-i18n="upcoming_bills">Upcoming Bills</span></h3>
+                    <div id="bill-list"><p class="text-muted" data-i18n="no_bills">No bills scheduled.</p></div>
                 </div>
             </div>
 
             <!-- ─── CARDS ─── -->
             <div class="page" id="page-cards">
-                <div class="page-title">💳 Cards</div>
+                <div class="page-title"><i class="fas fa-credit-card"></i> <span data-i18n="cards_title">Cards</span></div>
                 <div class="panel">
-                    <h3>Add Card</h3>
+                    <h3><i class="fas fa-plus-circle"></i> <span data-i18n="add_card">Add Card</span></h3>
                     <div class="row">
                         <div class="form-group">
-                            <label>Card Number</label>
+                            <label data-i18n="card_number">Card Number</label>
                             <input class="form-control" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
                         </div>
                         <div class="form-group">
-                            <label>Cardholder Name</label>
+                            <label data-i18n="cardholder_name">Cardholder Name</label>
                             <input class="form-control" id="card-name" placeholder="John Doe">
                         </div>
                         <div class="form-group">
-                            <label>Expiry (MM/YY)</label>
+                            <label data-i18n="expiry">Expiry (MM/YY)</label>
                             <input class="form-control" id="card-expiry" placeholder="12/25">
                         </div>
                         <div class="form-group">
-                            <label>CVV</label>
+                            <label data-i18n="cvv">CVV</label>
                             <input class="form-control" id="card-cvv" placeholder="123" maxlength="4" type="password">
                         </div>
                     </div>
-                    <button class="btn" id="add-card-btn">➕ Add Card</button>
-                    <p class="text-muted mt-8">🔒 All card data is stored locally and encrypted.</p>
+                    <button class="btn" id="add-card-btn"><i class="fas fa-plus"></i> <span data-i18n="add_card_btn">Add Card</span></button>
+                    <p class="text-muted mt-8"><i class="fas fa-lock"></i> <span data-i18n="card_security">All card data is stored locally and encrypted.</span></p>
                 </div>
                 <div class="panel">
-                    <h3>Your Cards</h3>
-                    <div id="card-list"><p class="text-muted">No cards added.</p></div>
+                    <h3><i class="fas fa-list"></i> <span data-i18n="your_cards">Your Cards</span></h3>
+                    <div id="card-list"><p class="text-muted" data-i18n="no_cards">No cards added.</p></div>
                 </div>
             </div>
 
             <!-- ─── CALCULATOR ─── -->
             <div class="page" id="page-calculator">
-                <div class="page-title">🧮 Currency Calculator</div>
+                <div class="page-title"><i class="fas fa-calculator"></i> <span data-i18n="calculator_title">Currency Calculator</span></div>
                 <div class="panel">
-                    <h3>Convert Currency</h3>
+                    <h3><i class="fas fa-exchange-alt"></i> <span data-i18n="convert_currency">Convert Currency</span></h3>
                     <div class="row">
                         <div class="form-group">
-                            <label>Amount</label>
+                            <label data-i18n="amount">Amount</label>
                             <input class="form-control" id="calc-amount" placeholder="100" value="100">
                         </div>
                         <div class="form-group">
-                            <label>From</label>
+                            <label data-i18n="from_currency">From</label>
                             <select class="form-control" id="calc-from">
                                 <option value="USD">USD</option><option value="EUR">EUR</option>
                                 <option value="GBP">GBP</option><option value="JPY">JPY</option>
@@ -1236,7 +1313,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>To</label>
+                            <label data-i18n="to_currency">To</label>
                             <select class="form-control" id="calc-to">
                                 <option value="EUR">EUR</option><option value="USD">USD</option>
                                 <option value="GBP">GBP</option><option value="JPY">JPY</option>
@@ -1246,100 +1323,748 @@
                             </select>
                         </div>
                     </div>
-                    <button class="btn" id="calc-convert-btn">🔄 Convert</button>
+                    <button class="btn" id="calc-convert-btn"><i class="fas fa-sync-alt"></i> <span data-i18n="convert_btn">Convert</span></button>
                     <div style="margin-top:16px;font-size:22px;font-weight:700;" id="calc-result">—</div>
-                    <p class="text-muted">💡 Using approximate real-time rates (no API key needed).</p>
+                    <p class="text-muted"><i class="fas fa-info-circle"></i> <span data-i18n="calc_note">Using approximate real-time rates (no API key needed).</span></p>
                 </div>
                 <div class="panel">
-                    <h3>Numerical Keypad</h3>
-                    <div id="numpad-calc" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-width:280px;"></div>
+                    <h3><i class="fas fa-keyboard"></i> <span data-i18n="numpad_label">Numerical Keypad</span></h3>
+                    <div id="numpad-calc"></div>
                 </div>
             </div>
 
             <!-- ─── BANKS ─── -->
             <div class="page" id="page-banks">
-                <div class="page-title">🌐 Banks Near You</div>
+                <div class="page-title"><i class="fas fa-globe"></i> <span data-i18n="banks_title">Banks Near You</span></div>
                 <div class="panel">
-                    <button class="btn" id="find-banks-btn">📍 Find Banks Near Me</button>
-                    <div id="bank-list" class="mt-16"><p class="text-muted">Click the button to search for banks based on your location.</p></div>
+                    <button class="btn" id="find-banks-btn"><i class="fas fa-map-marker-alt"></i> <span data-i18n="find_banks">Find Banks Near Me</span></button>
+                    <div id="bank-list" class="mt-16"><p class="text-muted" data-i18n="click_to_find">Click the button to search for banks based on your location.</p></div>
                 </div>
             </div>
 
             <!-- ─── SETTINGS ─── -->
             <div class="page" id="page-settings">
-                <div class="page-title">⚙️ Settings</div>
+                <div class="page-title"><i class="fas fa-cog"></i> <span data-i18n="settings_title">Settings</span></div>
                 <div class="panel">
-                    <h3>Theme</h3>
+                    <h3><i class="fas fa-palette"></i> <span data-i18n="theme">Theme</span></h3>
                     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                        <button class="btn btn-secondary theme-set" data-theme="classic">Classic</button>
-                        <button class="btn btn-secondary theme-set" data-theme="aero">Aero</button>
-                        <button class="btn btn-secondary theme-set" data-theme="metro">Metro</button>
-                        <button class="btn btn-secondary theme-set" data-theme="modern">Modern</button>
-                        <button class="btn btn-secondary theme-set" data-theme="default">Default</button>
+                        <button class="btn btn-secondary theme-set" data-theme="classic"><i class="fas fa-desktop"></i> Classic</button>
+                        <button class="btn btn-secondary theme-set" data-theme="aero"><i class="fas fa-window-maximize"></i> Aero</button>
+                        <button class="btn btn-secondary theme-set" data-theme="metro"><i class="fas fa-th-large"></i> Metro</button>
+                        <button class="btn btn-secondary theme-set" data-theme="modern"><i class="fas fa-gem"></i> Modern</button>
+                        <button class="btn btn-secondary theme-set" data-theme="default"><i class="fas fa-undo"></i> Default</button>
                     </div>
                     <div class="mt-16">
-                        <label><input type="checkbox" id="dark-mode-toggle"> Dark Mode (follow system)</label>
+                        <label><input type="checkbox" id="dark-mode-toggle"> <span data-i18n="dark_mode">Dark Mode (follow system)</span></label>
                     </div>
                 </div>
                 <div class="panel">
-                    <h3>Backup & Restore</h3>
-                    <button class="btn btn-secondary" id="backup-btn">💾 Backup (JSON)</button>
-                    <button class="btn btn-secondary" id="restore-btn">📂 Restore (JSON)</button>
+                    <h3><i class="fas fa-database"></i> <span data-i18n="backup_restore">Backup & Restore</span></h3>
+                    <button class="btn btn-secondary" id="backup-btn"><i class="fas fa-download"></i> <span data-i18n="backup_btn">Backup (JSON)</span></button>
+                    <button class="btn btn-secondary" id="restore-btn"><i class="fas fa-upload"></i> <span data-i18n="restore_btn">Restore (JSON)</span></button>
                     <input type="file" id="restore-file" accept=".json" style="display:none;">
-                    <p class="text-muted mt-8">Backup your data to a removable disk or local file.</p>
+                    <p class="text-muted mt-8"><i class="fas fa-info-circle"></i> <span data-i18n="backup_note">Backup your data to a removable disk or local file.</span></p>
                 </div>
                 <div class="panel">
-                    <h3>Roles</h3>
+                    <h3><i class="fas fa-user-tag"></i> <span data-i18n="roles">Roles</span></h3>
                     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-                        <button class="btn btn-secondary role-set" data-role="user">👤 User</button>
-                        <button class="btn btn-secondary role-set" data-role="church">⛪ Church</button>
-                        <button class="btn btn-secondary role-set" data-role="school">🏫 School</button>
-                        <button class="btn btn-secondary role-set" data-role="business">💼 Business</button>
-                        <button class="btn btn-secondary role-set" data-role="admin">🛡️ Admin</button>
+                        <button class="btn btn-secondary role-set" data-role="user"><i class="fas fa-user"></i> User</button>
+                        <button class="btn btn-secondary role-set" data-role="church"><i class="fas fa-church"></i> Church</button>
+                        <button class="btn btn-secondary role-set" data-role="school"><i class="fas fa-school"></i> School</button>
+                        <button class="btn btn-secondary role-set" data-role="business"><i class="fas fa-briefcase"></i> Business</button>
+                        <button class="btn btn-secondary role-set" data-role="admin"><i class="fas fa-shield-alt"></i> Admin</button>
                     </div>
-                    <p class="mt-8 text-muted">Current role: <span id="current-role-display" class="badge">user</span></p>
+                    <p class="mt-8 text-muted"><span data-i18n="current_role">Current role:</span> <span id="current-role-display" class="badge">user</span></p>
                     <div id="role-specific-settings" class="mt-8"></div>
                 </div>
                 <div class="panel">
-                    <h3>Silverlight Plugin</h3>
+                    <h3><i class="fas fa-film"></i> <span data-i18n="silverlight">Silverlight Plugin</span></h3>
                     <div class="silverlight-placeholder">
-                        🎬 Silverlight support is available as a plug-in for Chrome, Firefox, Edge, Safari, and Internet Explorer.
-                        <br><small>Install the Silverlight extension to enable rich media content.</small>
+                        <i class="fas fa-video"></i> <span data-i18n="silverlight_text">Silverlight support is available as a plug-in for Chrome, Firefox, Edge, Safari, and Internet Explorer.</span>
+                        <br><small data-i18n="silverlight_sub">Install the Silverlight extension to enable rich media content.</small>
                     </div>
                 </div>
                 <div class="panel">
-                    <h3>IE Compatibility</h3>
-                    <p class="text-muted">Compatible with Windows 9x, 2000, XP, Vista, 7, 8, 8.1, 10, 11 and Android 8.0+.</p>
+                    <h3><i class="fas fa-globe"></i> <span data-i18n="ie_compat">IE Compatibility</span></h3>
+                    <p class="text-muted" data-i18n="ie_compat_text">Compatible with Windows 9x, 2000, XP, Vista, 7, 8, 8.1, 10, 11 and Android 8.0+.</p>
                 </div>
             </div>
 
             <!-- ─── FEEDBACK ─── -->
             <div class="page" id="page-feedback">
-                <div class="page-title">💬 Feedback & Suggestions</div>
+                <div class="page-title"><i class="fas fa-comment-dots"></i> <span data-i18n="feedback_title">Feedback & Suggestions</span></div>
                 <div class="panel">
-                    <h3>Send Feedback</h3>
+                    <h3><i class="fas fa-pen"></i> <span data-i18n="send_feedback">Send Feedback</span></h3>
                     <div class="form-group">
-                        <label>Your Message</label>
+                        <label data-i18n="your_message">Your Message</label>
                         <textarea class="form-control" id="feedback-msg" rows="4" placeholder="Share your thoughts, suggestions, or report issues..."></textarea>
                     </div>
-                    <button class="btn" id="send-feedback-btn">📨 Send Feedback</button>
-                    <p class="text-muted mt-8">Your feedback helps us improve Money2005.</p>
+                    <button class="btn" id="send-feedback-btn"><i class="fas fa-paper-plane"></i> <span data-i18n="send_btn">Send Feedback</span></button>
+                    <p class="text-muted mt-8"><i class="fas fa-info-circle"></i> <span data-i18n="feedback_note">Your feedback helps us improve Money2005.</span></p>
                 </div>
             </div>
 
             <!-- ─── FOOTER ─── -->
-            <div class="ie-hint">💰 Money2005 — Beta 1.0.24 — Compatible with IE 5.5+ • Windows 9x to 11 • Android 8.0+</div>
+            <div class="ie-hint"><i class="fas fa-coins"></i> Money2005 — Beta 1.0.24 — Compatible with IE 5.5+ • Windows 9x to 11 • Android 8.0+</div>
         </div>
     </div>
 
     <script>
         // ─────────────────────────────────────────────────────────────
         //  MONEY2005 — FULL APPLICATION
-        //  Beta 1.0.24
+        //  Beta 1.0.24 with multilingual support (EN, AR, ZH, JA, KO, FIL)
         // ─────────────────────────────────────────────────────────────
 
         (function() {
             'use strict';
+
+            // ─── TRANSLATIONS ──────────────────────────────────────
+            const translations = {
+                en: {
+                    nav_dashboard: 'Dashboard',
+                    nav_accounts: 'Accounts',
+                    nav_transactions: 'Transactions',
+                    nav_goals: 'Goals',
+                    nav_billing: 'Billing',
+                    nav_cards: 'Cards',
+                    nav_calculator: 'Calculator',
+                    nav_banks: 'Banks',
+                    nav_settings: 'Settings',
+                    nav_feedback: 'Feedback',
+                    nav_signout: 'Sign Out',
+                    dashboard_title: 'Dashboard',
+                    net_worth: 'Net Worth',
+                    total_income: 'Total Income',
+                    total_expenses: 'Total Expenses',
+                    total_savings: 'Savings',
+                    net_worth_trend: 'Net Worth Trend',
+                    finance_news: 'Finance News',
+                    advisor_fyi: 'AdvisorFYI',
+                    accounts_title: 'Accounts',
+                    create_account: 'Create Account',
+                    account_name: 'Account Name',
+                    currency: 'Currency',
+                    initial_balance: 'Initial Balance',
+                    create_btn: 'Create Account',
+                    zero_balance: 'Zero Balance',
+                    your_accounts: 'Your Accounts',
+                    no_accounts: 'No accounts yet.',
+                    transactions_title: 'Transactions',
+                    add_transaction: 'Add Transaction',
+                    account: 'Account',
+                    category: 'Category',
+                    amount: 'Amount',
+                    type: 'Type',
+                    type_income: 'Income',
+                    type_expense: 'Expense',
+                    add_btn: 'Add',
+                    clear_btn: 'Clear',
+                    transaction_history: 'Transaction History',
+                    no_transactions: 'No transactions.',
+                    goals_title: 'Savings Goals',
+                    new_goal: 'New Goal',
+                    goal_name: 'Goal Name',
+                    target_amount: 'Target Amount',
+                    saved_so_far: 'Saved So Far',
+                    add_goal: 'Add Goal',
+                    your_goals: 'Your Goals',
+                    no_goals: 'No goals set.',
+                    billing_title: 'Billing & Calendar',
+                    calendar: 'Calendar',
+                    add_billing: 'Add Billing Event',
+                    date: 'Date',
+                    description: 'Description',
+                    add_bill: 'Add Bill',
+                    upcoming_bills: 'Upcoming Bills',
+                    no_bills: 'No bills scheduled.',
+                    cards_title: 'Cards',
+                    add_card: 'Add Card',
+                    card_number: 'Card Number',
+                    cardholder_name: 'Cardholder Name',
+                    expiry: 'Expiry (MM/YY)',
+                    cvv: 'CVV',
+                    add_card_btn: 'Add Card',
+                    card_security: 'All card data is stored locally and encrypted.',
+                    your_cards: 'Your Cards',
+                    no_cards: 'No cards added.',
+                    calculator_title: 'Currency Calculator',
+                    convert_currency: 'Convert Currency',
+                    from_currency: 'From',
+                    to_currency: 'To',
+                    convert_btn: 'Convert',
+                    calc_note: 'Using approximate real-time rates (no API key needed).',
+                    numpad_label: 'Numerical Keypad',
+                    banks_title: 'Banks Near You',
+                    find_banks: 'Find Banks Near Me',
+                    click_to_find: 'Click the button to search for banks based on your location.',
+                    settings_title: 'Settings',
+                    theme: 'Theme',
+                    dark_mode: 'Dark Mode (follow system)',
+                    backup_restore: 'Backup & Restore',
+                    backup_btn: 'Backup (JSON)',
+                    restore_btn: 'Restore (JSON)',
+                    backup_note: 'Backup your data to a removable disk or local file.',
+                    roles: 'Roles',
+                    current_role: 'Current role:',
+                    silverlight: 'Silverlight Plugin',
+                    silverlight_text: 'Silverlight support is available as a plug-in for Chrome, Firefox, Edge, Safari, and Internet Explorer.',
+                    silverlight_sub: 'Install the Silverlight extension to enable rich media content.',
+                    ie_compat: 'IE Compatibility',
+                    ie_compat_text: 'Compatible with Windows 9x, 2000, XP, Vista, 7, 8, 8.1, 10, 11 and Android 8.0+.',
+                    feedback_title: 'Feedback & Suggestions',
+                    send_feedback: 'Send Feedback',
+                    your_message: 'Your Message',
+                    send_btn: 'Send Feedback',
+                    feedback_note: 'Your feedback helps us improve Money2005.',
+                    cat_income: 'Income',
+                    cat_food: 'Food',
+                    cat_transport: 'Transport',
+                    cat_shopping: 'Shopping',
+                    cat_entertainment: 'Entertainment',
+                    cat_bills: 'Bills',
+                    cat_health: 'Health',
+                    cat_education: 'Education',
+                    cat_savings: 'Savings',
+                    cat_other: 'Other',
+                },
+                ar: {
+                    nav_dashboard: 'لوحة التحكم',
+                    nav_accounts: 'الحسابات',
+                    nav_transactions: 'المعاملات',
+                    nav_goals: 'الأهداف',
+                    nav_billing: 'الفواتير',
+                    nav_cards: 'البطاقات',
+                    nav_calculator: 'آلة حاسبة',
+                    nav_banks: 'البنوك',
+                    nav_settings: 'الإعدادات',
+                    nav_feedback: 'ملاحظات',
+                    nav_signout: 'تسجيل الخروج',
+                    dashboard_title: 'لوحة التحكم',
+                    net_worth: 'صافي الثروة',
+                    total_income: 'إجمالي الدخل',
+                    total_expenses: 'إجمالي المصاريف',
+                    total_savings: 'المدخرات',
+                    net_worth_trend: 'اتجاه صافي الثروة',
+                    finance_news: 'أخبار مالية',
+                    advisor_fyi: 'مستشار مالي',
+                    accounts_title: 'الحسابات',
+                    create_account: 'إنشاء حساب',
+                    account_name: 'اسم الحساب',
+                    currency: 'العملة',
+                    initial_balance: 'الرصيد الافتتاحي',
+                    create_btn: 'إنشاء حساب',
+                    zero_balance: 'رصيد صفر',
+                    your_accounts: 'حساباتك',
+                    no_accounts: 'لا توجد حسابات بعد.',
+                    transactions_title: 'المعاملات',
+                    add_transaction: 'إضافة معاملة',
+                    account: 'الحساب',
+                    category: 'الفئة',
+                    amount: 'المبلغ',
+                    type: 'النوع',
+                    type_income: 'دخل',
+                    type_expense: 'مصروف',
+                    add_btn: 'إضافة',
+                    clear_btn: 'مسح',
+                    transaction_history: 'سجل المعاملات',
+                    no_transactions: 'لا توجد معاملات.',
+                    goals_title: 'أهداف الادخار',
+                    new_goal: 'هدف جديد',
+                    goal_name: 'اسم الهدف',
+                    target_amount: 'المبلغ المستهدف',
+                    saved_so_far: 'المدخر حتى الآن',
+                    add_goal: 'إضافة هدف',
+                    your_goals: 'أهدافك',
+                    no_goals: 'لم يتم تعيين أهداف.',
+                    billing_title: 'الفواتير والتقويم',
+                    calendar: 'التقويم',
+                    add_billing: 'إضافة حدث فاتورة',
+                    date: 'التاريخ',
+                    description: 'الوصف',
+                    add_bill: 'إضافة فاتورة',
+                    upcoming_bills: 'الفواتير القادمة',
+                    no_bills: 'لا توجد فواتير مجدولة.',
+                    cards_title: 'البطاقات',
+                    add_card: 'إضافة بطاقة',
+                    card_number: 'رقم البطاقة',
+                    cardholder_name: 'اسم حامل البطاقة',
+                    expiry: 'تاريخ الانتهاء (شهر/سنة)',
+                    cvv: 'رمز التحقق',
+                    add_card_btn: 'إضافة بطاقة',
+                    card_security: 'جميع بيانات البطاقة مخزنة محلياً ومشفرة.',
+                    your_cards: 'بطاقاتك',
+                    no_cards: 'لم تتم إضافة بطاقات.',
+                    calculator_title: 'آلة حاسبة العملات',
+                    convert_currency: 'تحويل العملات',
+                    from_currency: 'من',
+                    to_currency: 'إلى',
+                    convert_btn: 'تحويل',
+                    calc_note: 'باستخدام أسعار تقريبية في الوقت الفعلي (لا حاجة إلى مفتاح API).',
+                    numpad_label: 'لوحة المفاتيح الرقمية',
+                    banks_title: 'البنوك القريبة منك',
+                    find_banks: 'البحث عن بنوك قريبة',
+                    click_to_find: 'انقر على الزر للبحث عن البنوك بناءً على موقعك.',
+                    settings_title: 'الإعدادات',
+                    theme: 'المظهر',
+                    dark_mode: 'الوضع الداكن (متابعة النظام)',
+                    backup_restore: 'النسخ الاحتياطي والاستعادة',
+                    backup_btn: 'نسخ احتياطي (JSON)',
+                    restore_btn: 'استعادة (JSON)',
+                    backup_note: 'قم بعمل نسخة احتياطية من بياناتك على قرص قابل للإزالة أو ملف محلي.',
+                    roles: 'الأدوار',
+                    current_role: 'الدور الحالي:',
+                    silverlight: 'ملحق Silverlight',
+                    silverlight_text: 'يتوفر دعم Silverlight كملحق لمتصفحات Chrome و Firefox و Edge و Safari و Internet Explorer.',
+                    silverlight_sub: 'قم بتثبيت ملحق Silverlight لتمكين محتوى الوسائط الغنية.',
+                    ie_compat: 'توافق IE',
+                    ie_compat_text: 'متوافق مع Windows 9x و 2000 و XP و Vista و 7 و 8 و 8.1 و 10 و 11 و Android 8.0+.',
+                    feedback_title: 'الملاحظات والاقتراحات',
+                    send_feedback: 'إرسال ملاحظات',
+                    your_message: 'رسالتك',
+                    send_btn: 'إرسال',
+                    feedback_note: 'ملاحظاتك تساعدنا في تحسين Money2005.',
+                    cat_income: 'دخل',
+                    cat_food: 'طعام',
+                    cat_transport: 'مواصلات',
+                    cat_shopping: 'تسوق',
+                    cat_entertainment: 'ترفيه',
+                    cat_bills: 'فواتير',
+                    cat_health: 'صحة',
+                    cat_education: 'تعليم',
+                    cat_savings: 'مدخرات',
+                    cat_other: 'أخرى',
+                },
+                zh: {
+                    nav_dashboard: '仪表板',
+                    nav_accounts: '账户',
+                    nav_transactions: '交易',
+                    nav_goals: '目标',
+                    nav_billing: '账单',
+                    nav_cards: '卡片',
+                    nav_calculator: '计算器',
+                    nav_banks: '银行',
+                    nav_settings: '设置',
+                    nav_feedback: '反馈',
+                    nav_signout: '退出',
+                    dashboard_title: '仪表板',
+                    net_worth: '净资产',
+                    total_income: '总收入',
+                    total_expenses: '总支出',
+                    total_savings: '储蓄',
+                    net_worth_trend: '净资产趋势',
+                    finance_news: '财经新闻',
+                    advisor_fyi: '财务顾问',
+                    accounts_title: '账户',
+                    create_account: '创建账户',
+                    account_name: '账户名称',
+                    currency: '货币',
+                    initial_balance: '初始余额',
+                    create_btn: '创建账户',
+                    zero_balance: '零余额',
+                    your_accounts: '您的账户',
+                    no_accounts: '还没有账户。',
+                    transactions_title: '交易',
+                    add_transaction: '添加交易',
+                    account: '账户',
+                    category: '类别',
+                    amount: '金额',
+                    type: '类型',
+                    type_income: '收入',
+                    type_expense: '支出',
+                    add_btn: '添加',
+                    clear_btn: '清除',
+                    transaction_history: '交易历史',
+                    no_transactions: '没有交易。',
+                    goals_title: '储蓄目标',
+                    new_goal: '新目标',
+                    goal_name: '目标名称',
+                    target_amount: '目标金额',
+                    saved_so_far: '已存金额',
+                    add_goal: '添加目标',
+                    your_goals: '您的目标',
+                    no_goals: '未设置目标。',
+                    billing_title: '账单和日历',
+                    calendar: '日历',
+                    add_billing: '添加账单事件',
+                    date: '日期',
+                    description: '描述',
+                    add_bill: '添加账单',
+                    upcoming_bills: '即将到来的账单',
+                    no_bills: '没有计划的账单。',
+                    cards_title: '卡片',
+                    add_card: '添加卡片',
+                    card_number: '卡号',
+                    cardholder_name: '持卡人姓名',
+                    expiry: '有效期 (月/年)',
+                    cvv: '安全码',
+                    add_card_btn: '添加卡片',
+                    card_security: '所有卡片数据本地存储并加密。',
+                    your_cards: '您的卡片',
+                    no_cards: '未添加卡片。',
+                    calculator_title: '货币计算器',
+                    convert_currency: '货币转换',
+                    from_currency: '从',
+                    to_currency: '到',
+                    convert_btn: '转换',
+                    calc_note: '使用近似实时汇率（无需API密钥）。',
+                    numpad_label: '数字键盘',
+                    banks_title: '附近的银行',
+                    find_banks: '查找附近的银行',
+                    click_to_find: '点击按钮根据您的位置搜索银行。',
+                    settings_title: '设置',
+                    theme: '主题',
+                    dark_mode: '深色模式（跟随系统）',
+                    backup_restore: '备份与恢复',
+                    backup_btn: '备份 (JSON)',
+                    restore_btn: '恢复 (JSON)',
+                    backup_note: '将数据备份到可移动磁盘或本地文件。',
+                    roles: '角色',
+                    current_role: '当前角色：',
+                    silverlight: 'Silverlight 插件',
+                    silverlight_text: 'Silverlight 支持作为 Chrome、Firefox、Edge、Safari 和 Internet Explorer 的插件提供。',
+                    silverlight_sub: '安装 Silverlight 扩展以启用富媒体内容。',
+                    ie_compat: 'IE 兼容性',
+                    ie_compat_text: '兼容 Windows 9x、2000、XP、Vista、7、8、8.1、10、11 和 Android 8.0+。',
+                    feedback_title: '反馈与建议',
+                    send_feedback: '发送反馈',
+                    your_message: '您的消息',
+                    send_btn: '发送反馈',
+                    feedback_note: '您的反馈有助于我们改进 Money2005。',
+                    cat_income: '收入',
+                    cat_food: '食品',
+                    cat_transport: '交通',
+                    cat_shopping: '购物',
+                    cat_entertainment: '娱乐',
+                    cat_bills: '账单',
+                    cat_health: '健康',
+                    cat_education: '教育',
+                    cat_savings: '储蓄',
+                    cat_other: '其他',
+                },
+                ja: {
+                    nav_dashboard: 'ダッシュボード',
+                    nav_accounts: '口座',
+                    nav_transactions: '取引',
+                    nav_goals: '目標',
+                    nav_billing: '請求',
+                    nav_cards: 'カード',
+                    nav_calculator: '計算機',
+                    nav_banks: '銀行',
+                    nav_settings: '設定',
+                    nav_feedback: 'フィードバック',
+                    nav_signout: 'サインアウト',
+                    dashboard_title: 'ダッシュボード',
+                    net_worth: '純資産',
+                    total_income: '総収入',
+                    total_expenses: '総支出',
+                    total_savings: '貯蓄',
+                    net_worth_trend: '純資産トレンド',
+                    finance_news: '金融ニュース',
+                    advisor_fyi: 'アドバイザー',
+                    accounts_title: '口座',
+                    create_account: '口座作成',
+                    account_name: '口座名',
+                    currency: '通貨',
+                    initial_balance: '初期残高',
+                    create_btn: '口座作成',
+                    zero_balance: 'ゼロ残高',
+                    your_accounts: 'あなたの口座',
+                    no_accounts: '口座がありません。',
+                    transactions_title: '取引',
+                    add_transaction: '取引追加',
+                    account: '口座',
+                    category: 'カテゴリ',
+                    amount: '金額',
+                    type: 'タイプ',
+                    type_income: '収入',
+                    type_expense: '支出',
+                    add_btn: '追加',
+                    clear_btn: 'クリア',
+                    transaction_history: '取引履歴',
+                    no_transactions: '取引がありません。',
+                    goals_title: '貯蓄目標',
+                    new_goal: '新規目標',
+                    goal_name: '目標名',
+                    target_amount: '目標額',
+                    saved_so_far: '現在の貯蓄',
+                    add_goal: '目標追加',
+                    your_goals: 'あなたの目標',
+                    no_goals: '目標が設定されていません。',
+                    billing_title: '請求とカレンダー',
+                    calendar: 'カレンダー',
+                    add_billing: '請求イベント追加',
+                    date: '日付',
+                    description: '説明',
+                    add_bill: '請求追加',
+                    upcoming_bills: '今後の請求',
+                    no_bills: '予定された請求はありません。',
+                    cards_title: 'カード',
+                    add_card: 'カード追加',
+                    card_number: 'カード番号',
+                    cardholder_name: 'カード名義人',
+                    expiry: '有効期限 (月/年)',
+                    cvv: 'セキュリティコード',
+                    add_card_btn: 'カード追加',
+                    card_security: 'すべてのカードデータはローカルに暗号化されて保存されます。',
+                    your_cards: 'あなたのカード',
+                    no_cards: 'カードが追加されていません。',
+                    calculator_title: '通貨計算機',
+                    convert_currency: '通貨変換',
+                    from_currency: '元の通貨',
+                    to_currency: '変換先',
+                    convert_btn: '変換',
+                    calc_note: '概算のリアルタイムレートを使用（APIキー不要）。',
+                    numpad_label: 'テンキー',
+                    banks_title: '近くの銀行',
+                    find_banks: '近くの銀行を検索',
+                    click_to_find: 'ボタンをクリックして、現在地に基づいて銀行を検索します。',
+                    settings_title: '設定',
+                    theme: 'テーマ',
+                    dark_mode: 'ダークモード（システムに従う）',
+                    backup_restore: 'バックアップと復元',
+                    backup_btn: 'バックアップ (JSON)',
+                    restore_btn: '復元 (JSON)',
+                    backup_note: 'データをリムーバブルディスクまたはローカルファイルにバックアップします。',
+                    roles: 'ロール',
+                    current_role: '現在のロール：',
+                    silverlight: 'Silverlight プラグイン',
+                    silverlight_text: 'Silverlight サポートは Chrome、Firefox、Edge、Safari、Internet Explorer のプラグインとして利用可能です。',
+                    silverlight_sub: 'Silverlight 拡張機能をインストールしてリッチメディアコンテンツを有効にします。',
+                    ie_compat: 'IE 互換性',
+                    ie_compat_text: 'Windows 9x、2000、XP、Vista、7、8、8.1、10、11 および Android 8.0+ と互換性があります。',
+                    feedback_title: 'フィードバックと提案',
+                    send_feedback: 'フィードバック送信',
+                    your_message: 'メッセージ',
+                    send_btn: '送信',
+                    feedback_note: 'あなたのフィードバックは Money2005 の改善に役立ちます。',
+                    cat_income: '収入',
+                    cat_food: '食費',
+                    cat_transport: '交通費',
+                    cat_shopping: '買い物',
+                    cat_entertainment: '娯楽',
+                    cat_bills: '請求',
+                    cat_health: '健康',
+                    cat_education: '教育',
+                    cat_savings: '貯蓄',
+                    cat_other: 'その他',
+                },
+                ko: {
+                    nav_dashboard: '대시보드',
+                    nav_accounts: '계좌',
+                    nav_transactions: '거래',
+                    nav_goals: '목표',
+                    nav_billing: '청구서',
+                    nav_cards: '카드',
+                    nav_calculator: '계산기',
+                    nav_banks: '은행',
+                    nav_settings: '설정',
+                    nav_feedback: '피드백',
+                    nav_signout: '로그아웃',
+                    dashboard_title: '대시보드',
+                    net_worth: '순자산',
+                    total_income: '총 수입',
+                    total_expenses: '총 지출',
+                    total_savings: '저축',
+                    net_worth_trend: '순자산 추세',
+                    finance_news: '금융 뉴스',
+                    advisor_fyi: '재무 어드바이저',
+                    accounts_title: '계좌',
+                    create_account: '계좌 생성',
+                    account_name: '계좌명',
+                    currency: '통화',
+                    initial_balance: '초기 잔액',
+                    create_btn: '계좌 생성',
+                    zero_balance: '제로 잔액',
+                    your_accounts: '내 계좌',
+                    no_accounts: '계좌가 없습니다.',
+                    transactions_title: '거래',
+                    add_transaction: '거래 추가',
+                    account: '계좌',
+                    category: '카테고리',
+                    amount: '금액',
+                    type: '유형',
+                    type_income: '수입',
+                    type_expense: '지출',
+                    add_btn: '추가',
+                    clear_btn: '지우기',
+                    transaction_history: '거래 내역',
+                    no_transactions: '거래가 없습니다.',
+                    goals_title: '저축 목표',
+                    new_goal: '새 목표',
+                    goal_name: '목표명',
+                    target_amount: '목표 금액',
+                    saved_so_far: '현재 저축액',
+                    add_goal: '목표 추가',
+                    your_goals: '내 목표',
+                    no_goals: '설정된 목표가 없습니다.',
+                    billing_title: '청구 및 달력',
+                    calendar: '달력',
+                    add_billing: '청구 이벤트 추가',
+                    date: '날짜',
+                    description: '설명',
+                    add_bill: '청구서 추가',
+                    upcoming_bills: '다가오는 청구서',
+                    no_bills: '예정된 청구서가 없습니다.',
+                    cards_title: '카드',
+                    add_card: '카드 추가',
+                    card_number: '카드 번호',
+                    cardholder_name: '카드 소유자',
+                    expiry: '만료일 (월/년)',
+                    cvv: '보안 코드',
+                    add_card_btn: '카드 추가',
+                    card_security: '모든 카드 데이터는 로컬에 암호화되어 저장됩니다.',
+                    your_cards: '내 카드',
+                    no_cards: '추가된 카드가 없습니다.',
+                    calculator_title: '통화 계산기',
+                    convert_currency: '통화 변환',
+                    from_currency: '변환 전',
+                    to_currency: '변환 후',
+                    convert_btn: '변환',
+                    calc_note: '실시간 환율 근사치 사용 (API 키 불필요).',
+                    numpad_label: '숫자 키패드',
+                    banks_title: '내 주변 은행',
+                    find_banks: '내 주변 은행 찾기',
+                    click_to_find: '버튼을 클릭하여 위치 기반으로 은행을 검색합니다.',
+                    settings_title: '설정',
+                    theme: '테마',
+                    dark_mode: '다크 모드 (시스템 따르기)',
+                    backup_restore: '백업 및 복원',
+                    backup_btn: '백업 (JSON)',
+                    restore_btn: '복원 (JSON)',
+                    backup_note: '데이터를 이동식 디스크 또는 로컬 파일에 백업합니다.',
+                    roles: '역할',
+                    current_role: '현재 역할:',
+                    silverlight: 'Silverlight 플러그인',
+                    silverlight_text: 'Silverlight 지원은 Chrome, Firefox, Edge, Safari 및 Internet Explorer용 플러그인으로 제공됩니다.',
+                    silverlight_sub: 'Silverlight 확장 프로그램을 설치하여 리치 미디어 콘텐츠를 활성화하세요.',
+                    ie_compat: 'IE 호환성',
+                    ie_compat_text: 'Windows 9x, 2000, XP, Vista, 7, 8, 8.1, 10, 11 및 Android 8.0+와 호환됩니다.',
+                    feedback_title: '피드백 및 제안',
+                    send_feedback: '피드백 보내기',
+                    your_message: '메시지',
+                    send_btn: '보내기',
+                    feedback_note: '여러분의 피드백은 Money2005를 개선하는 데 도움이 됩니다.',
+                    cat_income: '수입',
+                    cat_food: '식비',
+                    cat_transport: '교통',
+                    cat_shopping: '쇼핑',
+                    cat_entertainment: '오락',
+                    cat_bills: '청구서',
+                    cat_health: '건강',
+                    cat_education: '교육',
+                    cat_savings: '저축',
+                    cat_other: '기타',
+                },
+                fil: {
+                    nav_dashboard: 'Dashboard',
+                    nav_accounts: 'Mga Account',
+                    nav_transactions: 'Mga Transaksyon',
+                    nav_goals: 'Mga Layunin',
+                    nav_billing: 'Pagsingil',
+                    nav_cards: 'Mga Card',
+                    nav_calculator: 'Calculator',
+                    nav_banks: 'Mga Bangko',
+                    nav_settings: 'Mga Setting',
+                    nav_feedback: 'Feedback',
+                    nav_signout: 'Mag-sign Out',
+                    dashboard_title: 'Dashboard',
+                    net_worth: 'Net Worth',
+                    total_income: 'Kita',
+                    total_expenses: 'Gastos',
+                    total_savings: 'Mga Naipon',
+                    net_worth_trend: 'Trend ng Net Worth',
+                    finance_news: 'Balita sa Pananalapi',
+                    advisor_fyi: 'Tagapayo sa Pinansyal',
+                    accounts_title: 'Mga Account',
+                    create_account: 'Gumawa ng Account',
+                    account_name: 'Pangalan ng Account',
+                    currency: 'Kasalukuyang Pera',
+                    initial_balance: 'Paunang Balanse',
+                    create_btn: 'Gumawa ng Account',
+                    zero_balance: 'Zero Balance',
+                    your_accounts: 'Iyong mga Account',
+                    no_accounts: 'Wala pang account.',
+                    transactions_title: 'Mga Transaksyon',
+                    add_transaction: 'Magdagdag ng Transaksyon',
+                    account: 'Account',
+                    category: 'Kategorya',
+                    amount: 'Halaga',
+                    type: 'Uri',
+                    type_income: 'Kita',
+                    type_expense: 'Gastos',
+                    add_btn: 'Idagdag',
+                    clear_btn: 'Burahin',
+                    transaction_history: 'Kasaysayan ng Transaksyon',
+                    no_transactions: 'Walang transaksyon.',
+                    goals_title: 'Mga Layunin sa Pag-iipon',
+                    new_goal: 'Bagong Layunin',
+                    goal_name: 'Pangalan ng Layunin',
+                    target_amount: 'Target na Halaga',
+                    saved_so_far: 'Naipon na',
+                    add_goal: 'Magdagdag ng Layunin',
+                    your_goals: 'Iyong mga Layunin',
+                    no_goals: 'Walang nakatakdang layunin.',
+                    billing_title: 'Pagsingil at Kalendaryo',
+                    calendar: 'Kalendaryo',
+                    add_billing: 'Magdagdag ng Kaganapan sa Pagsingil',
+                    date: 'Petsa',
+                    description: 'Paglalarawan',
+                    add_bill: 'Magdagdag ng Bill',
+                    upcoming_bills: 'Mga Darating na Bill',
+                    no_bills: 'Walang nakatakdang bill.',
+                    cards_title: 'Mga Card',
+                    add_card: 'Magdagdag ng Card',
+                    card_number: 'Numero ng Card',
+                    cardholder_name: 'Pangalan ng May-ari',
+                    expiry: 'Petsa ng Pag-expire (MM/YY)',
+                    cvv: 'CVV',
+                    add_card_btn: 'Magdagdag ng Card',
+                    card_security: 'Ang lahat ng data ng card ay naka-imbak nang lokal at naka-encrypt.',
+                    your_cards: 'Iyong mga Card',
+                    no_cards: 'Walang idinagdag na card.',
+                    calculator_title: 'Calculator ng Pera',
+                    convert_currency: 'Palitan ang Pera',
+                    from_currency: 'Mula sa',
+                    to_currency: 'Papuntang',
+                    convert_btn: 'Palitan',
+                    calc_note: 'Gumagamit ng tinatayang real-time na rate (walang kailangang API key).',
+                    numpad_label: 'Numerical Keypad',
+                    banks_title: 'Mga Bangko Malapit sa Iyo',
+                    find_banks: 'Maghanap ng mga Bangko Malapit sa Akin',
+                    click_to_find: 'I-click ang pindutan upang maghanap ng mga bangko batay sa iyong lokasyon.',
+                    settings_title: 'Mga Setting',
+                    theme: 'Tema',
+                    dark_mode: 'Dark Mode (sumunod sa system)',
+                    backup_restore: 'Backup at Restore',
+                    backup_btn: 'Backup (JSON)',
+                    restore_btn: 'I-restore (JSON)',
+                    backup_note: 'I-backup ang iyong data sa isang removable disk o lokal na file.',
+                    roles: 'Mga Tungkulin',
+                    current_role: 'Kasalukuyang tungkulin:',
+                    silverlight: 'Silverlight Plugin',
+                    silverlight_text: 'Available ang Silverlight support bilang plugin para sa Chrome, Firefox, Edge, Safari, at Internet Explorer.',
+                    silverlight_sub: 'I-install ang Silverlight extension upang paganahin ang rich media content.',
+                    ie_compat: 'IE Compatibility',
+                    ie_compat_text: 'Katugma sa Windows 9x, 2000, XP, Vista, 7, 8, 8.1, 10, 11 at Android 8.0+.',
+                    feedback_title: 'Feedback at Mungkahi',
+                    send_feedback: 'Magpadala ng Feedback',
+                    your_message: 'Iyong Mensahe',
+                    send_btn: 'Magpadala',
+                    feedback_note: 'Tumutulong ang iyong feedback upang mapabuti ang Money2005.',
+                    cat_income: 'Kita',
+                    cat_food: 'Pagkain',
+                    cat_transport: 'Transportasyon',
+                    cat_shopping: 'Pamimili',
+                    cat_entertainment: 'Libangan',
+                    cat_bills: 'Mga Bill',
+                    cat_health: 'Kalusugan',
+                    cat_education: 'Edukasyon',
+                    cat_savings: 'Pag-iipon',
+                    cat_other: 'Iba pa',
+                }
+            };
+
+            let currentLang = 'en';
 
             // ─── SOUND SYSTEM ──────────────────────────────────────
             const SoundFX = {
@@ -1437,6 +2162,30 @@
                 SoundFX.play('ERROR.WAV');
             }
 
+            // ─── I18N ──────────────────────────────────────────────
+            function t(key) {
+                return translations[currentLang]?.[key] || key;
+            }
+
+            function applyTranslations() {
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.dataset.i18n;
+                    el.textContent = t(key);
+                });
+                // Update page titles and placeholders
+                document.querySelectorAll('input[placeholder]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-placeholder');
+                    if (key) el.placeholder = t(key);
+                });
+                document.querySelectorAll('select option[data-i18n]').forEach(el => {
+                    el.textContent = t(el.dataset.i18n);
+                });
+                // Update role-specific
+                document.getElementById('current-role-display').textContent = DB.getRole();
+                // Set dir for RTL languages
+                document.body.dir = (currentLang === 'ar') ? 'rtl' : 'ltr';
+            }
+
             // ─── DATA STORE ────────────────────────────────────────
             const DB = {
                 _data: null,
@@ -1450,7 +2199,7 @@
                 },
                 _reset() {
                     this._data = {
-                        user: { name: 'Guest', role: 'user', theme: 'default', dark: false },
+                        user: { name: 'Guest', role: 'user', theme: 'default', dark: false, lang: 'en' },
                         accounts: [],
                         transactions: [],
                         goals: [],
@@ -1471,7 +2220,8 @@
                     if (!this._data.feedbacks) this._data.feedbacks = [];
                     if (!this._data.settings) this._data.settings = { currency: 'USD' };
                     if (!this._data.netWorthHistory) this._data.netWorthHistory = [];
-                    if (!this._data.user) this._data.user = { name: 'Guest', role: 'user', theme: 'default', dark: false };
+                    if (!this._data.user) this._data.user = { name: 'Guest', role: 'user', theme: 'default', dark: false,
+                        lang: 'en' };
                     if (!this._data.version) this._data.version = '1.0.24';
                 },
                 save() {
@@ -1501,13 +2251,11 @@
                     tx.date = tx.date || new Date().toISOString().split('T')[0];
                     tx.timestamp = Date.now();
                     this._data.transactions.push(tx);
-                    // Update account balance
                     const acc = this._data.accounts.find(a => a.id === tx.accountId);
                     if (acc) {
                         if (tx.type === 'income') acc.balance += parseFloat(tx.amount);
                         else acc.balance -= parseFloat(tx.amount);
                     }
-                    // Update net worth history
                     this._updateNetWorth();
                     this.save();
                     return tx;
@@ -1557,7 +2305,6 @@
                 getCards() { return this._data.cards || []; },
                 addCard(card) {
                     card.id = Date.now() + '_' + Math.random().toString(36).substr(2, 4);
-                    // Simple encryption (base64)
                     card.number = btoa(card.number);
                     card.cvv = btoa(card.cvv);
                     this._data.cards.push(card);
@@ -1594,6 +2341,9 @@
                 setRole(role) { this._data.user.role = role;
                     this.save(); },
                 getUserName() { return this._data.user.name || 'Guest'; },
+                getLang() { return this._data.user.lang || 'en'; },
+                setLang(lang) { this._data.user.lang = lang;
+                    this.save(); },
                 exportData() {
                     return JSON.stringify(this._data, null, 2);
                 },
@@ -1608,7 +2358,7 @@
             };
             DB.init();
 
-            // ─── CURRENCY RATES (static fallback) ──────────────
+            // ─── CURRENCY RATES ────────────────────────────────────
             const FX_RATES = {
                 USD: 1,
                 EUR: 0.92,
@@ -1694,7 +2444,7 @@
                 if (!grid) return;
                 const year = calDate.getFullYear();
                 const month = calDate.getMonth();
-                title.textContent = new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                title.textContent = new Date(year, month).toLocaleDateString(currentLang, { month: 'long', year: 'numeric' });
 
                 const firstDay = new Date(year, month, 1).getDay();
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -1706,13 +2456,11 @@
                 const today = new Date();
                 const todayStr = today.toISOString().split('T')[0];
 
-                // Previous month days
                 for (let i = firstDay - 1; i >= 0; i--) {
                     const d = daysInPrev - i;
                     html += `<div class="day other-month">${d}</div>`;
                 }
 
-                // Current month days
                 for (let d = 1; d <= daysInMonth; d++) {
                     const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
                     const hasEvent = calEvents.some(e => e.date === dateStr);
@@ -1723,7 +2471,6 @@
                     html += `<div class="${cls}" data-date="${dateStr}">${d}</div>`;
                 }
 
-                // Next month days
                 const totalCells = firstDay + daysInMonth;
                 const remaining = (7 - (totalCells % 7)) % 7;
                 for (let d = 1; d <= remaining; d++) {
@@ -1732,12 +2479,11 @@
 
                 grid.innerHTML = html;
 
-                // Click on day
                 grid.querySelectorAll('.day:not(.other-month)').forEach(el => {
                     el.addEventListener('click', () => {
                         const date = el.dataset.date;
                         document.getElementById('bill-date').value = date;
-                        showAlert('📅 Date Selected', `Selected date: ${date}`, 'info');
+                        showAlert('📅 ' + t('date'), t('selected_date') + ': ' + date, 'info');
                     });
                 });
             }
@@ -1752,21 +2498,21 @@
             function renderAccounts() {
                 const list = document.getElementById('account-list');
                 const accounts = DB.getAccounts();
-                if (!accounts.length) { list.innerHTML = '<p class="text-muted">No accounts yet.</p>'; return; }
+                if (!accounts.length) { list.innerHTML = `<p class="text-muted">${t('no_accounts')}</p>`; return; }
                 let html = '';
                 accounts.forEach(a => {
                     html += `
                         <div class="tx-item">
                             <div><strong>${a.name}</strong> <span class="badge">${a.currency}</span></div>
                             <div class="tx-amount">${formatCurrency(a.balance, a.currency)}</div>
-                            <div><button class="btn btn-danger btn-sm del-acc" data-id="${a.id}">🗑️</button></div>
+                            <div><button class="btn btn-danger btn-sm del-acc" data-id="${a.id}"><i class="fas fa-trash"></i></button></div>
                         </div>
                     `;
                 });
                 list.innerHTML = html;
                 list.querySelectorAll('.del-acc').forEach(btn => {
                     btn.addEventListener('click', () => {
-                        if (confirm('Delete this account?')) {
+                        if (confirm(t('delete_account'))) {
                             DB.deleteAccount(btn.dataset.id);
                             renderAccounts();
                             renderTxSelect();
@@ -1791,7 +2537,7 @@
             function renderTransactions() {
                 const list = document.getElementById('tx-list');
                 const txs = DB.getTransactions();
-                if (!txs.length) { list.innerHTML = '<p class="text-muted">No transactions.</p>'; return; }
+                if (!txs.length) { list.innerHTML = `<p class="text-muted">${t('no_transactions')}</p>`; return; }
                 const accounts = DB.getAccounts();
                 let html = '';
                 txs.slice().reverse().forEach(tx => {
@@ -1809,7 +2555,7 @@
                             </div>
                             <div>
                                 <span class="tx-amount ${cls}">${sign} ${formatCurrency(Math.abs(tx.amount), curr)}</span>
-                                <button class="btn btn-danger btn-sm del-tx" data-id="${tx.id}">✕</button>
+                                <button class="btn btn-danger btn-sm del-tx" data-id="${tx.id}"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
                     `;
@@ -1817,7 +2563,7 @@
                 list.innerHTML = html;
                 list.querySelectorAll('.del-tx').forEach(btn => {
                     btn.addEventListener('click', () => {
-                        if (confirm('Delete this transaction?')) {
+                        if (confirm(t('delete_transaction'))) {
                             DB.deleteTransaction(btn.dataset.id);
                             renderTransactions();
                             renderAccounts();
@@ -1831,7 +2577,7 @@
             function renderGoals() {
                 const list = document.getElementById('goal-list');
                 const goals = DB.getGoals();
-                if (!goals.length) { list.innerHTML = '<p class="text-muted">No goals set.</p>'; return; }
+                if (!goals.length) { list.innerHTML = `<p class="text-muted">${t('no_goals')}</p>`; return; }
                 let html = '';
                 goals.forEach(g => {
                     const pct = g.target > 0 ? Math.min(100, (g.saved / g.target) * 100) : 0;
@@ -1847,9 +2593,9 @@
                                 <div class="bar"><div class="fill" style="width:${pct}%;${done?'background:#28a745;':''}"></div></div>
                             </div>
                             <div style="display:flex;gap:6px;">
-                                <input class="form-control" style="width:80px;padding:4px 8px;" placeholder="add" data-goal-id="${g.id}" class="goal-add-input">
-                                <button class="btn btn-success btn-sm goal-add-btn" data-id="${g.id}">+</button>
-                                <button class="btn btn-danger btn-sm goal-del-btn" data-id="${g.id}">🗑️</button>
+                                <input class="form-control" style="width:80px;padding:4px 8px;" placeholder="${t('add_amount')}" data-goal-id="${g.id}" class="goal-add-input">
+                                <button class="btn btn-success btn-sm goal-add-btn" data-id="${g.id}"><i class="fas fa-plus"></i></button>
+                                <button class="btn btn-danger btn-sm goal-del-btn" data-id="${g.id}"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                     `;
@@ -1877,7 +2623,7 @@
                 });
                 list.querySelectorAll('.goal-del-btn').forEach(btn => {
                     btn.addEventListener('click', () => {
-                        if (confirm('Delete this goal?')) {
+                        if (confirm(t('delete_goal'))) {
                             DB.deleteGoal(btn.dataset.id);
                             renderGoals();
                             SoundFX.play('DELETE.WAV');
@@ -1889,7 +2635,7 @@
             function renderBills() {
                 const list = document.getElementById('bill-list');
                 const bills = DB.getBills();
-                if (!bills.length) { list.innerHTML = '<p class="text-muted">No bills scheduled.</p>'; return; }
+                if (!bills.length) { list.innerHTML = `<p class="text-muted">${t('no_bills')}</p>`; return; }
                 let html = '';
                 const sorted = bills.slice().sort((a, b) => a.date.localeCompare(b.date));
                 sorted.forEach(b => {
@@ -1898,7 +2644,7 @@
                             <div><strong>${b.desc}</strong> <span class="text-muted">${b.date}</span></div>
                             <div>
                                 <span>${formatCurrency(b.amount, 'USD')}</span>
-                                <button class="btn btn-danger btn-sm del-bill" data-id="${b.id}">✕</button>
+                                <button class="btn btn-danger btn-sm del-bill" data-id="${b.id}"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
                     `;
@@ -1906,7 +2652,7 @@
                 list.innerHTML = html;
                 list.querySelectorAll('.del-bill').forEach(btn => {
                     btn.addEventListener('click', () => {
-                        if (confirm('Delete this bill?')) {
+                        if (confirm(t('delete_bill'))) {
                             DB.deleteBill(btn.dataset.id);
                             renderBills();
                             updateCalendarEvents();
@@ -1919,18 +2665,16 @@
             function renderCards() {
                 const list = document.getElementById('card-list');
                 const cards = DB.getCards();
-                if (!cards.length) { list.innerHTML = '<p class="text-muted">No cards added.</p>'; return; }
+                if (!cards.length) { list.innerHTML = `<p class="text-muted">${t('no_cards')}</p>`; return; }
                 let html = '';
                 cards.forEach(c => {
                     const num = atob(c.number);
                     const masked = '•••• ' + num.slice(-4);
-                    const cvv = atob(c.cvv);
                     html += `
                         <div class="tx-item">
                             <div><strong>${c.name}</strong> <span class="badge">${masked}</span> <span class="text-muted">Exp: ${c.expiry}</span></div>
                             <div>
-                                <span class="text-muted">CVV: •••</span>
-                                <button class="btn btn-danger btn-sm del-card" data-id="${c.id}">🗑️</button>
+                                <button class="btn btn-danger btn-sm del-card" data-id="${c.id}"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                     `;
@@ -1938,7 +2682,7 @@
                 list.innerHTML = html;
                 list.querySelectorAll('.del-card').forEach(btn => {
                     btn.addEventListener('click', () => {
-                        if (confirm('Delete this card?')) {
+                        if (confirm(t('delete_card'))) {
                             DB.deleteCard(btn.dataset.id);
                             renderCards();
                             SoundFX.play('DELETE.WAV');
@@ -1961,9 +2705,7 @@
                 document.getElementById('total-expense-display').textContent = formatCurrency(expense, 'USD');
                 document.getElementById('total-savings-display').textContent = formatCurrency(savings, 'USD');
 
-                // Render trend chart
                 renderTrendChart();
-                // Advisor tip
                 updateAdvisor();
             }
 
@@ -1978,9 +2720,9 @@
                 const history = DB.getNetWorthHistory();
                 if (!history.length) {
                     ctx.fillStyle = '#999';
-                    ctx.font = '14px sans-serif';
+                    ctx.font = '14px Inter, sans-serif';
                     ctx.textAlign = 'center';
-                    ctx.fillText('No data yet. Start tracking your finances!', canvas.width / 2, 90);
+                    ctx.fillText(t('no_data'), canvas.width / 2, 90);
                     return;
                 }
 
@@ -1994,7 +2736,6 @@
 
                 ctx.clearRect(0, 0, w, h);
 
-                // Grid lines
                 ctx.strokeStyle = 'rgba(0,0,0,0.06)';
                 ctx.lineWidth = 1;
                 for (let i = 0; i < 5; i++) {
@@ -2005,7 +2746,6 @@
                     ctx.stroke();
                 }
 
-                // Line
                 if (values.length > 1) {
                     ctx.beginPath();
                     ctx.strokeStyle = '#0078ff';
@@ -2020,7 +2760,6 @@
                     }
                     ctx.stroke();
 
-                    // Area fill
                     ctx.lineTo(w - pad, h - pad);
                     ctx.lineTo(pad, h - pad);
                     ctx.closePath();
@@ -2035,9 +2774,8 @@
                     ctx.fill();
                 }
 
-                // Labels
                 ctx.fillStyle = 'rgba(0,0,0,0.4)';
-                ctx.font = '10px sans-serif';
+                ctx.font = '10px Inter, sans-serif';
                 ctx.textAlign = 'center';
                 if (values.length > 1) {
                     const step = Math.max(1, Math.floor(values.length / 6));
@@ -2063,22 +2801,18 @@
 
                 let msg = '💡 ';
                 if (role === 'church') {
-                    msg +=
-                        'As a church, track your tithes and offerings. Use the billing calendar to schedule MOOE (Maintenance and Other Operating Expenses). Keep separate accounts for different ministries.';
+                    msg += t('advisor_church');
                 } else if (role === 'school') {
-                    msg +=
-                        'For educational institutions, monitor tuition fees, operational costs, and MOOE. Use the goals feature to plan for infrastructure and equipment.';
+                    msg += t('advisor_school');
                 } else if (role === 'business') {
-                    msg +=
-                        'Apply accountancy methods: track assets, liabilities, and equity. Use the calculator for currency conversion. Monitor cash flow with transaction history.';
+                    msg += t('advisor_business');
                 } else if (role === 'admin') {
-                    msg +=
-                        'Administrator access: oversee all accounts, manage users, and audit financial data. Ensure compliance with financial regulations.';
+                    msg += t('advisor_admin');
                 } else {
-                    if (!accounts.length) msg += 'Start by adding your first account! Click on "Accounts" to begin.';
-                    else if (!txs.length) msg += 'Add your first transaction to start tracking your spending.';
-                    else if (goals.length) msg += 'You have ' + goals.length + ' goal(s). Keep saving to reach them!';
-                    else msg += 'You are on track! Consider setting up savings goals for future plans.';
+                    if (!accounts.length) msg += t('advisor_no_accounts');
+                    else if (!txs.length) msg += t('advisor_no_txs');
+                    else if (goals.length) msg += t('advisor_has_goals').replace('{n}', goals.length);
+                    else msg += t('advisor_default');
                 }
                 tip.textContent = msg;
                 SoundFX.play('ADVISOR.WAV');
@@ -2086,7 +2820,7 @@
 
             function updateClock() {
                 const now = new Date();
-                const s = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit',
+                const s = now.toLocaleTimeString(currentLang, { hour: '2-digit', minute: '2-digit', second: '2-digit',
                     hour12: true });
                 document.getElementById('clock-display').textContent = s;
             }
@@ -2117,12 +2851,6 @@
                 document.body.className = '';
                 if (theme && theme !== 'default') document.body.classList.add(theme);
                 if (dark) document.body.classList.add('dark');
-                // Aero transparency level
-                if (theme === 'aero') {
-                    document.querySelectorAll('.panel').forEach(p => {
-                        p.style.backdropFilter = 'blur(16px)';
-                    });
-                }
                 DB.setTheme(theme || 'default');
                 DB.setDark(!!dark);
             }
@@ -2134,22 +2862,21 @@
                 idx = (idx + 1) % themes.length;
                 const dark = DB.isDark();
                 applyTheme(themes[idx], dark);
-                showAlert('🎨 Theme Changed', 'Theme: ' + themes[idx].toUpperCase(), 'info');
+                showAlert('🎨 ' + t('theme_changed'), t('theme_set') + ': ' + themes[idx].toUpperCase(), 'info');
                 SoundFX.play('SWITCH.WAV');
             }
 
             // ─── BANKS NEAR ME ─────────────────────────────────────
             function findBanks() {
                 const list = document.getElementById('bank-list');
-                list.innerHTML = '<p>📍 Fetching your location...</p>';
+                list.innerHTML = `<p>📍 ${t('fetching_location')}...</p>`;
                 if (!navigator.geolocation) {
-                    list.innerHTML = '<p class="text-muted">Geolocation is not supported by your browser.</p>';
+                    list.innerHTML = `<p class="text-muted">${t('geo_not_supported')}</p>`;
                     return;
                 }
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
                         const { latitude, longitude } = pos.coords;
-                        // OpenStreetMap Nominatim (no API key)
                         const url =
                             `https://nominatim.openstreetmap.org/search?format=json&q=bank&lat=${latitude}&lon=${longitude}&zoom=15&limit=10`;
                         fetch(url)
@@ -2165,15 +2892,15 @@
                                     list.innerHTML = html;
                                     SoundFX.play('FINDLIST.WAV');
                                 } else {
-                                    list.innerHTML = '<p class="text-muted">No banks found nearby.</p>';
+                                    list.innerHTML = `<p class="text-muted">${t('no_banks_found')}</p>`;
                                 }
                             })
                             .catch(() => {
-                                list.innerHTML = '<p class="text-muted">Could not fetch bank data. Try again later.</p>';
+                                list.innerHTML = `<p class="text-muted">${t('bank_fetch_error')}</p>`;
                             });
                     },
                     () => {
-                        list.innerHTML = '<p class="text-muted">Unable to get your location. Please enable location services.</p>';
+                        list.innerHTML = `<p class="text-muted">${t('location_denied')}</p>`;
                     }
                 );
             }
@@ -2182,7 +2909,6 @@
             function fetchNews() {
                 const ticker = document.querySelector('#news-ticker span');
                 if (!ticker) return;
-                // Use a free RSS-to-JSON proxy or fallback
                 const url =
                     'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2Fbloomberg%2Fmarkets';
                 fetch(url)
@@ -2192,35 +2918,34 @@
                             const headlines = data.items.slice(0, 10).map(i => i.title).join(' • ');
                             ticker.textContent = '📈 ' + headlines;
                         } else {
-                            ticker.textContent = '📊 Market data: US stocks steady, bonds mixed, commodities rise.';
+                            ticker.textContent = '📊 ' + t('news_fallback');
                         }
                     })
                     .catch(() => {
-                        ticker.textContent =
-                            '📊 Finance news: Global markets mixed as investors await economic data. Oil prices steady.';
+                        ticker.textContent = '📊 ' + t('news_fallback');
                     });
             }
 
             // ─── INIT ──────────────────────────────────────────────
             function init() {
-                // Build numpads
+                // Load language
+                currentLang = DB.getLang() || 'en';
+                document.getElementById('lang-select').value = currentLang;
+                applyTranslations();
+
                 buildNumpad('numpad', 'acc-balance');
                 buildNumpad('numpad-calc', 'calc-amount');
 
-                // Clock
                 updateClock();
                 setInterval(updateClock, 1000);
 
-                // Apply saved theme
                 const savedTheme = DB.getTheme() || 'default';
                 const savedDark = DB.isDark();
                 applyTheme(savedTheme, savedDark);
                 document.getElementById('dark-mode-toggle').checked = savedDark;
 
-                // User badge
                 updateUserBadge();
 
-                // Render all
                 renderAccounts();
                 renderTransactions();
                 renderGoals();
@@ -2228,10 +2953,24 @@
                 renderCards();
                 updateDashboard();
                 updateCalendarEvents();
-                updateTxSelect();
+                renderTxSelect();
                 fetchNews();
 
                 // ─── EVENT BINDINGS ──────────────────────────────
+
+                // Language switch
+                document.getElementById('lang-select').addEventListener('change', function() {
+                    currentLang = this.value;
+                    DB.setLang(currentLang);
+                    applyTranslations();
+                    // Re-render calendar with new locale
+                    renderCalendar();
+                    // Update dashboard to reflect language
+                    updateDashboard();
+                    // Update user badge (role name might be translated)
+                    updateUserBadge();
+                    SoundFX.play('SWITCH.WAV');
+                });
 
                 // Navigation
                 document.querySelectorAll('.nav-item[data-page]').forEach(item => {
@@ -2242,8 +2981,8 @@
 
                 // Sign out
                 document.getElementById('signout-btn').addEventListener('click', () => {
-                    if (confirm('Sign out? You will remain signed in on this tab.')) {
-                        showAlert('👋 Signed Out', 'You have been signed out. Refresh to sign in again.', 'info');
+                    if (confirm(t('sign_out_confirm'))) {
+                        showAlert('👋 ' + t('signed_out'), t('signed_out_msg'), 'info');
                         SoundFX.play('GREETING.WAV');
                     }
                 });
@@ -2303,19 +3042,14 @@
                         updateUserBadge();
                         document.getElementById('current-role-display').textContent = role;
                         updateAdvisor();
-                        showAlert('👤 Role Changed', 'Role set to: ' + role.toUpperCase(), 'info');
+                        showAlert('👤 ' + t('role_changed'), t('role_set') + ': ' + role.toUpperCase(), 'info');
                         SoundFX.play('SWITCH.WAV');
-                        // Role-specific settings
                         const rs = document.getElementById('role-specific-settings');
-                        if (role === 'church') rs.innerHTML =
-                            '<p class="text-muted">⛪ Church mode: Track tithes, offerings, and MOOE (Maintenance and Other Operating Expenses). Audit-ready reporting.</p>';
-                        else if (role === 'school') rs.innerHTML =
-                            '<p class="text-muted">🏫 School mode: Monitor tuition, operational costs, and MOOE. Track per-department budgets.</p>';
-                        else if (role === 'business') rs.innerHTML =
-                            '<p class="text-muted">💼 Business mode: Accountancy method applied. Track assets, liabilities, equity, and cash flow.</p>';
-                        else if (role === 'admin') rs.innerHTML =
-                            '<p class="text-muted">🛡️ Admin mode: Full oversight. Manage all accounts, users, and audit trails.</p>';
-                        else rs.innerHTML = '<p class="text-muted">👤 User mode: Standard personal finance features.</p>';
+                        if (role === 'church') rs.innerHTML = `<p class="text-muted">${t('role_church_desc')}</p>`;
+                        else if (role === 'school') rs.innerHTML = `<p class="text-muted">${t('role_school_desc')}</p>`;
+                        else if (role === 'business') rs.innerHTML = `<p class="text-muted">${t('role_business_desc')}</p>`;
+                        else if (role === 'admin') rs.innerHTML = `<p class="text-muted">${t('role_admin_desc')}</p>`;
+                        else rs.innerHTML = `<p class="text-muted">${t('role_user_desc')}</p>`;
                     });
                 });
 
@@ -2324,15 +3058,15 @@
                     const name = document.getElementById('acc-name').value.trim();
                     const currency = document.getElementById('acc-currency').value;
                     const balance = parseFloat(document.getElementById('acc-balance').value) || 0;
-                    if (!name) { showAlert('⚠️ Error', 'Please enter an account name.', 'error'); return; }
+                    if (!name) { showAlert('⚠️ ' + t('error'), t('enter_account_name'), 'error'); return; }
                     const acc = DB.addAccount({ name, currency, balance });
                     renderAccounts();
                     updateDashboard();
-                    updateTxSelect();
+                    renderTxSelect();
                     if (balance === 0) SoundFX.play('BALAZERO.WAV');
                     else SoundFX.play('BALANCIN.WAV');
-                    showAlert('✅ Account Created', `${name} (${currency}) with balance ${formatCurrency(balance, currency)}`,
-                    'info');
+                    showAlert('✅ ' + t('account_created'), `${name} (${currency}) ${t('with_balance')} ${formatCurrency(balance, currency)}`,
+                        'info');
                     document.getElementById('acc-name').value = '';
                     document.getElementById('acc-balance').value = '0.00';
                 });
@@ -2348,8 +3082,8 @@
                     const category = document.getElementById('tx-category').value;
                     const amount = parseFloat(document.getElementById('tx-amount').value);
                     const type = document.getElementById('tx-type').value;
-                    if (!accountId) { showAlert('⚠️ Error', 'Please select an account.', 'error'); return; }
-                    if (isNaN(amount) || amount <= 0) { showAlert('⚠️ Error', 'Please enter a valid amount.',
+                    if (!accountId) { showAlert('⚠️ ' + t('error'), t('select_account'), 'error'); return; }
+                    if (isNaN(amount) || amount <= 0) { showAlert('⚠️ ' + t('error'), t('valid_amount'),
                         'error'); return; }
                     const tx = DB.addTransaction({ accountId, category, amount, type, date: new Date().toISOString()
                             .split('T')[0] });
@@ -2357,7 +3091,7 @@
                     renderAccounts();
                     updateDashboard();
                     SoundFX.play('TRANSENT.WAV');
-                    showAlert('✅ Transaction Added', `${type}: ${formatCurrency(amount, 'USD')} (${category})`, 'info');
+                    showAlert('✅ ' + t('tx_added'), `${type}: ${formatCurrency(amount, 'USD')} (${category})`, 'info');
                     document.getElementById('tx-amount').value = '';
                 });
 
@@ -2371,13 +3105,13 @@
                     const name = document.getElementById('goal-name').value.trim();
                     const target = parseFloat(document.getElementById('goal-target').value);
                     const saved = parseFloat(document.getElementById('goal-saved').value) || 0;
-                    if (!name || !target) { showAlert('⚠️ Error', 'Please enter a goal name and target.',
-                    'error'); return; }
+                    if (!name || !target) { showAlert('⚠️ ' + t('error'), t('goal_required'), 'error'); return; }
                     DB.addGoal({ name, target, saved });
                     renderGoals();
                     updateDashboard();
                     SoundFX.play('KERCHUNK.WAV');
-                    showAlert('🎯 Goal Added', `${name} — Target: ${formatCurrency(target, 'USD')}`, 'info');
+                    showAlert('🎯 ' + t('goal_added'), `${name} — ${t('target')}: ${formatCurrency(target, 'USD')}`,
+                        'info');
                     document.getElementById('goal-name').value = '';
                     document.getElementById('goal-target').value = '';
                     document.getElementById('goal-saved').value = '';
@@ -2388,12 +3122,14 @@
                     const date = document.getElementById('bill-date').value;
                     const desc = document.getElementById('bill-desc').value.trim();
                     const amount = parseFloat(document.getElementById('bill-amount').value);
-                    if (!date || !desc || !amount) { showAlert('⚠️ Error', 'Please fill in all fields.', 'error'); return; }
+                    if (!date || !desc || !amount) { showAlert('⚠️ ' + t('error'), t('fill_all_fields'),
+                        'error'); return; }
                     DB.addBill({ date, desc, amount });
                     renderBills();
                     updateCalendarEvents();
                     SoundFX.play('KERCHING.WAV');
-                    showAlert('📅 Bill Added', `${desc} on ${date} — ${formatCurrency(amount, 'USD')}`, 'info');
+                    showAlert('📅 ' + t('bill_added'), `${desc} ${t('on')} ${date} — ${formatCurrency(amount, 'USD')}`,
+                        'info');
                     document.getElementById('bill-desc').value = '';
                     document.getElementById('bill-amount').value = '';
                 });
@@ -2416,21 +3152,20 @@
                     const name = document.getElementById('card-name').value.trim();
                     const expiry = document.getElementById('card-expiry').value.trim();
                     const cvv = document.getElementById('card-cvv').value.trim();
-                    if (!number || !name || !expiry || !cvv) { showAlert('⚠️ Error', 'Please fill in all card fields.',
+                    if (!number || !name || !expiry || !cvv) { showAlert('⚠️ ' + t('error'), t('fill_card_fields'),
                             'error'); return; }
-                    if (!/^\d{13,19}$/.test(number)) { showAlert('⚠️ Error', 'Invalid card number format.',
-                    'error'); return; }
+                    if (!/^\d{13,19}$/.test(number)) { showAlert('⚠️ ' + t('error'), t('invalid_card'),
+                        'error'); return; }
                     DB.addCard({ number, name, expiry, cvv });
                     renderCards();
                     SoundFX.play('KERCHING.WAV');
-                    showAlert('💳 Card Added', `Card ending in ${number.slice(-4)} added securely.`, 'info');
+                    showAlert('💳 ' + t('card_added'), t('card_ending') + number.slice(-4), 'info');
                     document.getElementById('card-number').value = '';
                     document.getElementById('card-name').value = '';
                     document.getElementById('card-expiry').value = '';
                     document.getElementById('card-cvv').value = '';
                 });
 
-                // Card input formatting
                 document.getElementById('card-number').addEventListener('input', function() {
                     let v = this.value.replace(/\s/g, '');
                     if (v.length > 16) v = v.slice(0, 16);
@@ -2444,11 +3179,12 @@
                     const amount = parseFloat(document.getElementById('calc-amount').value);
                     const from = document.getElementById('calc-from').value;
                     const to = document.getElementById('calc-to').value;
-                    if (isNaN(amount) || amount <= 0) { showAlert('⚠️ Error', 'Enter a valid amount.', 'error'); return; }
+                    if (isNaN(amount) || amount <= 0) { showAlert('⚠️ ' + t('error'), t('valid_amount'),
+                        'error'); return; }
                     const rate = getRate(from, to);
                     const result = amount * rate;
                     document.getElementById('calc-result').textContent =
-                        `${formatCurrency(amount, from)} = ${formatCurrency(result, to)} (rate: ${rate.toFixed(4)})`;
+                        `${formatCurrency(amount, from)} = ${formatCurrency(result, to)} (${t('rate')}: ${rate.toFixed(4)})`;
                     SoundFX.play('CALCULAT.WAV');
                 });
 
@@ -2466,7 +3202,7 @@
                     a.click();
                     URL.revokeObjectURL(url);
                     SoundFX.play('DONE.WAV');
-                    showAlert('💾 Backup Complete', 'Your data has been exported as JSON.', 'info');
+                    showAlert('💾 ' + t('backup_complete'), t('backup_success'), 'info');
                 });
 
                 document.getElementById('restore-btn').addEventListener('click', () => {
@@ -2480,11 +3216,11 @@
                     reader.onload = (ev) => {
                         const json = ev.target.result;
                         if (DB.importData(json)) {
-                            showAlert('✅ Restore Successful', 'Data imported successfully! Reloading...', 'info');
+                            showAlert('✅ ' + t('restore_success'), t('restore_reload'), 'info');
                             setTimeout(() => location.reload(), 1000);
                             SoundFX.play('DONE.WAV');
                         } else {
-                            showAlert('❌ Restore Failed', 'Invalid data format.', 'error');
+                            showAlert('❌ ' + t('restore_failed'), t('invalid_data'), 'error');
                             SoundFX.play('ERROR.WAV');
                         }
                     };
@@ -2495,9 +3231,9 @@
                 // Feedback
                 document.getElementById('send-feedback-btn').addEventListener('click', () => {
                     const msg = document.getElementById('feedback-msg').value.trim();
-                    if (!msg) { showAlert('⚠️ Error', 'Please enter your feedback.', 'error'); return; }
+                    if (!msg) { showAlert('⚠️ ' + t('error'), t('enter_feedback'), 'error'); return; }
                     DB.addFeedback(msg);
-                    showAlert('📨 Thank You!', 'Your feedback has been submitted.', 'info');
+                    showAlert('📨 ' + t('thank_you'), t('feedback_submitted'), 'info');
                     document.getElementById('feedback-msg').value = '';
                     SoundFX.play('DONE.WAV');
                 });
@@ -2518,29 +3254,24 @@
                 document.querySelectorAll('#context-menu .ctx-item').forEach(item => {
                     item.addEventListener('click', () => {
                         const action = item.dataset.action;
-                        showAlert('🔄 Action', `Performed: ${action}`, 'info');
+                        showAlert('🔄 ' + t('action'), t('performed') + ': ' + action, 'info');
                         SoundFX.play('SWITCH.WAV');
                         document.getElementById('context-menu').style.display = 'none';
                     });
                 });
 
-                // Auto-assign sounds for various actions (mapped to existing sounds)
-                // We already use SoundFX.play() throughout
-
-                // Net worth trend auto-update
+                // Auto-update net worth
                 setInterval(() => {
                     updateDashboard();
                 }, 30000);
 
-                // Initial load sound
+                // Initial sound
                 SoundFX.play('LAUNCH.WAV');
 
-                // Set default date for bill
                 document.getElementById('bill-date').value = new Date().toISOString().split('T')[0];
 
-                // Show welcome
                 setTimeout(() => {
-                    showAlert('💰 Welcome to Money2005', 'Beta 1.0.24 — Your personal finance suite.', 'info');
+                    showAlert('💰 ' + t('welcome'), t('welcome_msg'), 'info');
                 }, 400);
             }
 
@@ -2552,17 +3283,11 @@
             }
 
             // ─── IE COMPATIBILITY SHIM ────────────────────────────
-            // For very old IE, we keep it simple
             if (!window.localStorage) {
                 alert('Your browser does not support localStorage. Please use a modern browser.');
             }
 
-            // ─── SILVERLIGHT PLUGIN HINT ──────────────────────────
-            // (placeholder only)
-
-            // ─── EXPOSE FOR DEBUG ──────────────────────────────────
-            window.__money2005 = { DB, SoundFX, showAlert };
-
+            window.__money2005 = { DB, SoundFX, showAlert, t };
         })();
     </script>
 </body>
